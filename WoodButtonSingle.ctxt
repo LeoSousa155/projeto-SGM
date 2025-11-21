@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=WoodButtonSingle
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ WoodButton\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=text
+comment1.target=WoodButtonSingle(java.lang.String)
+comment2.params=
+comment2.target=void\ updateImage()
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\r\n\ Act\ -\ do\ whatever\ the\ WoodButton\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+numComments=4
