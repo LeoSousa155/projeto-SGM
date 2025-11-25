@@ -22,6 +22,19 @@ public class MultiplayerLobby extends World
         bg.scale(800, 600);
     }
     
+    @Override
+    public void started()
+    {
+        MusicManager.enableMenuMusic();
+        MusicManager.onScenarioStarted();
+    }
+    
+    @Override
+    public void stopped()
+    {
+        MusicManager.onScenarioStopped();
+    }
+    
     /**
      * Constructor for objects of class MultiplayerLobby.
      * 

@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=MusicManager
+comment1.params=
+comment1.target=void\ enableMenuMusic()
+comment1.text=Call\ from\ menu-like\ worlds\ where\ menu\ music\ should\ exist\ (MainMenu,\ Options,\ etc.)
+comment2.params=
+comment2.target=void\ disableMenuMusic()
+comment2.text=Call\ from\ worlds\ where\ menu\ music\ should\ NOT\ be\ heard\ (e.g.,\ gameplay).
+comment3.params=
+comment3.target=void\ onScenarioStarted()
+comment3.text=Scenario\ resumed\ (Run\ pressed).
+comment4.params=
+comment4.target=void\ onScenarioStopped()
+comment4.text=Scenario\ paused\ (Pause\ pressed).
+comment5.params=
+comment5.target=int\ getMasterVolume()
+comment6.params=value
+comment6.target=void\ setMasterVolume(int)
+comment7.params=
+comment7.target=int\ getMusicVolume()
+comment8.params=value
+comment8.target=void\ setMusicVolume(int)
+comment9.params=
+comment9.target=void\ applyVolume()
+numComments=10

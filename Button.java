@@ -3,6 +3,7 @@ import greenfoot.*;
 public class Button extends Actor
 {
     private String label;
+    private int fontSize;
     private Runnable action;
     
     private GreenfootImage image;      // The normal image
@@ -10,8 +11,9 @@ public class Button extends Actor
     
     private boolean isMouseOver = false;
 
-    public Button(String label, String imageFile, int width, int height, Runnable action) {
+    public Button(String label, int fontSize, String imageFile, int width, int height, Runnable action) {
         this.label = label;
+        this.fontSize = fontSize;
         this.action = action;
     
         // 1. Setup Main Image
@@ -49,6 +51,10 @@ public class Button extends Actor
     public Button(String label, String imageFile, Runnable action) {
         this(label, imageFile, -1, -1, action);
     }
+    
+    public Button(String label, String imageFile, int width, int height, Runnable action) {
+        this(label, 28 , imageFile, width, height, action);
+    }
 
     private void updateImage(boolean hovered) {
         // Use the pre-calculated dark image or the normal one
@@ -59,14 +65,14 @@ public class Button extends Actor
 
         // Draw Text
         String[] lines = label.split("\n");
-        int fontSize = 28;
-        int y = (img.getHeight() - (lines.length * fontSize)) / 2;
+        int fSize = fontSize;
+        int y = (img.getHeight() - (lines.length * fSize)) / 2;
     
         for (String line : lines) {
-            GreenfootImage text = new GreenfootImage(line, fontSize, Color.WHITE, new Color(0,0,0,0));
+            GreenfootImage text = new GreenfootImage(line, fSize, Color.WHITE, new Color(0,0,0,0));
             int x = (img.getWidth() - text.getWidth()) / 2;
             img.drawImage(text, x, y);
-            y += fontSize;
+            y += fSize;
         }
     
         setImage(img);

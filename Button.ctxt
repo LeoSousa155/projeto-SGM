@@ -1,11 +1,13 @@
 #BlueJ class context
 comment0.target=Button
-comment1.params=label\ imageFile\ width\ height\ action
-comment1.target=Button(java.lang.String,\ java.lang.String,\ int,\ int,\ java.lang.Runnable)
+comment1.params=label\ fontSize\ imageFile\ width\ height\ action
+comment1.target=Button(java.lang.String,\ int,\ java.lang.String,\ int,\ int,\ java.lang.Runnable)
 comment2.params=label\ imageFile\ action
 comment2.target=Button(java.lang.String,\ java.lang.String,\ java.lang.Runnable)
-comment3.params=hovered
-comment3.target=void\ updateImage(boolean)
-comment4.params=
-comment4.target=void\ act()
-numComments=5
+comment3.params=label\ imageFile\ width\ height\ action
+comment3.target=Button(java.lang.String,\ java.lang.String,\ int,\ int,\ java.lang.Runnable)
+comment4.params=hovered
+comment4.target=void\ updateImage(boolean)
+comment5.params=
+comment5.target=void\ act()
+numComments=6

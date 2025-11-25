@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=PanelBoard
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ PanelBoard\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=imageFile
+comment1.target=PanelBoard(java.lang.String)
+comment2.params=a
+comment2.target=void\ addContent(greenfoot.Actor)
+comment3.params=
+comment3.target=void\ removePanel()
+numComments=4

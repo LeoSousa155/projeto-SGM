@@ -2,6 +2,10 @@
 comment0.target=MainMenu
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ MainMenu\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
-comment1.target=MainMenu()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ MenuPrincipal.\r\n
-numComments=2
+comment1.target=void\ started()
+comment2.params=
+comment2.target=void\ stopped()
+comment3.params=
+comment3.target=MainMenu()
+comment3.text=\r\n\ Constructor\ for\ objects\ of\ class\ MenuPrincipal.\r\n
+numComments=4

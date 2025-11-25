@@ -11,7 +11,7 @@ public class CaptainClass extends PlayerClass
     public CaptainClass()
     {
         GreenfootImage img = new GreenfootImage("captain.png");
-        img.scale(150, 150);   // <- resize here
+        img.scale(175, 175);   // <- resize here
         setImage(img);
     }
 }
