@@ -50,7 +50,7 @@ public class MainMenu extends World
         Button multiplayer = new Button(
             "Multiplayer",
             "button2.png",
-            () -> Greenfoot.setWorld(new MultiplayerLobby())
+            () -> Greenfoot.setWorld(new MultiplayerMenu())
         );
         addObject(multiplayer, 180, 400);
         

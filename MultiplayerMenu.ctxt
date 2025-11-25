@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=MultiplayerMenu
+comment1.params=
+comment1.target=void\ started()
+comment2.params=
+comment2.target=void\ stopped()
+comment3.params=
+comment3.target=MultiplayerMenu()
+comment4.params=newPanel\ x\ y
+comment4.target=void\ openPanel(PanelBoard,\ int,\ int)
+comment5.params=
+comment5.target=void\ showJoinRoomPanel()
+comment6.params=
+comment6.target=void\ showCreateRoomPanel()
+comment7.params=name\ password
+comment7.target=void\ createRoom(java.lang.String,\ java.lang.String)
+numComments=8

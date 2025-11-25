@@ -44,15 +44,25 @@ public class MultiplayerLobby extends World
         super(bg.getWidth(), bg.getHeight(), 1);
         setBackground(bg);
         
-        setPaintOrder(
-            Button.class,      // top
-            Couch.class,       // middle
-            PlayerClass.class  // bottom
-        );
-        
         addObject(couch, 500, 430);
         
         createButtons();
+        
+        Button code = new Button(
+            "   CODE:",
+            25,
+            "button1.png",
+            220, 70,
+            true,
+            false,
+            () -> {}
+        );
+        addObject(code, 150, 505);
+
+        // Code box
+        final CodeBox codeBox = new CodeBox(90, 30, 6, false, true); // width, height, max length, editable?, read-only?
+        codeBox.setText("ab42cd");
+        addObject(codeBox, 180, 500);
         
         Button start = new Button(
             "Start",
@@ -67,7 +77,8 @@ public class MultiplayerLobby extends World
             () -> Greenfoot.setWorld(new MainMenu())
         );
         addObject(back, 150, 410);
-
+        
+        setPaintOrder(CodeBox.class, Button.class, Couch.class, PlayerClass.class);
     }
     
     /** show exactly this player at (x,y) */
