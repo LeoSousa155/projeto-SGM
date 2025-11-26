@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Boat
-comment0.text=\r\n\ A\ classe\ Boat\ representa\ o\ barco\ do\ jogo,\ combinando\ as\ vis\u00F5es\ interna\ e\ externa.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ A\ classe\ Boat\ representa\ o\ barco\ do\ jogo,\ combinando\ as\ vis\u00F5es\ interna\ e\ externa.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=Boat()
 numComments=2

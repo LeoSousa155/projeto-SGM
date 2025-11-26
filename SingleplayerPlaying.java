@@ -38,5 +38,19 @@ public class SingleplayerPlaying extends World
         // Adiciona o barco ao centro do mundo
         Boat boat = new Boat();
         addObject(boat, bg.getWidth() / 2, bg.getHeight() / 2);
+        
+        Button mainMenu = new Button(
+            "MainMenu",
+            "button1.png",
+            () -> Greenfoot.setWorld(new MainMenu())
+        );
+        addObject(mainMenu, 700, 20);
+        Button option = new Button(
+            "Options",
+            "button1.png",
+            () -> Greenfoot.setWorld(new OptionsMenuGame())
+        );
+        addObject(option, 100, 20);
+        
     }
 }

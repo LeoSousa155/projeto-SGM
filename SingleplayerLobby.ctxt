@@ -1,11 +1,11 @@
 #BlueJ class context
 comment0.target=SingleplayerLobby
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ MultiplayerLobby\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ MultiplayerLobby\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=void\ started()
 comment2.params=
 comment2.target=void\ stopped()
 comment3.params=
 comment3.target=SingleplayerLobby()
-comment3.text=\r\n\ Constructor\ for\ objects\ of\ class\ MultiplayerLobby.\r\n\ \r\n
+comment3.text=\n\ Constructor\ for\ objects\ of\ class\ MultiplayerLobby.\n\ \n
 numComments=4

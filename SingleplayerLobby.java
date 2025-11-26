@@ -51,7 +51,7 @@ public class SingleplayerLobby extends World
         Button start = new Button(
             "Start",
             "button2.png",
-            () -> Greenfoot.setWorld(new MainMenu())
+            () -> Greenfoot.setWorld(new SingleplayerPlaying())
         );
         addObject(start, 150, 350);
         
@@ -61,6 +61,8 @@ public class SingleplayerLobby extends World
             () -> Greenfoot.setWorld(new MainMenu())
         );
         addObject(back, 150, 410);
+        
+
 
     }
 }
