@@ -1,6 +1,10 @@
 #BlueJ class context
 comment0.target=JackClass
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ JackClass\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Jack\ with\ 8-frame\ walking\ animation.\r\n
 comment1.params=
 comment1.target=JackClass()
-numComments=2
+comment2.params=
+comment2.target=void\ afterMove()
+comment3.params=
+comment3.target=void\ updateAnimation()
+numComments=4

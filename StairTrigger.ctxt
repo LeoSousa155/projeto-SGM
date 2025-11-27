@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=StairTrigger
+comment0.text=\r\n\ A\ trigger\ zone\ for\ moving\ between\ floors.\r\n\ Shows\ a\ visible\ icon\ ONLY\ when\ the\ player\ is\ touching\ it.\r\n\ Supports\ image\ scaling\ AND\ rotation.\r\n
+comment1.params=type\ worldX\ worldY\ targetX\ targetY\ scaleW\ scaleH\ rotation
+comment1.target=StairTrigger(int,\ int,\ int,\ int,\ int,\ int,\ int,\ int)
+comment1.text=\r\n\ Full-feature\ StairTrigger\r\n\r\n\ @param\ type\ TYPE_UP\ or\ TYPE_DOWN\r\n\ @param\ worldX\ world\ coordinate\ X\ of\ this\ trigger\r\n\ @param\ worldY\ world\ coordinate\ Y\ of\ this\ trigger\r\n\ @param\ targetX\ teleport\ destination\ X\r\n\ @param\ targetY\ teleport\ destination\ Y\r\n\ @param\ scaleW\ scale\ width\ (or\ -1\ for\ original)\r\n\ @param\ scaleH\ scale\ height\ (or\ -1\ for\ original)\r\n\ @param\ rotation\ rotation\ angle\ in\ degrees\ (0\u2013359)\r\n
+comment2.params=
+comment2.target=int\ getType()
+comment3.params=
+comment3.target=int\ getTargetX()
+comment4.params=
+comment4.target=int\ getTargetY()
+comment5.params=
+comment5.target=int\ getWorldX()
+comment6.params=
+comment6.target=int\ getWorldY()
+comment7.params=
+comment7.target=void\ updateVisibility()
+comment7.text=Show\ image\ only\ if\ player\ is\ inside\ the\ trigger\ area.
+comment8.params=world
+comment8.target=void\ updateScreenPosition(SingleplayerPlaying)
+comment8.text=Move\ with\ camera\ and\ update\ visibility.
+numComments=9

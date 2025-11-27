@@ -11,7 +11,7 @@ public class SingleplayerLobby extends World
     private static GreenfootImage bg = new GreenfootImage("menu_lobby.png");
     
     private Couch couch           = new Couch();
-    private PlayerClass jackClass = new JackClass();
+    private PlayerClass jackLobby = new JackLobby();
 
     static {
         bg.scale(800, 600);
@@ -45,13 +45,13 @@ public class SingleplayerLobby extends World
             PlayerClass.class  // bottom
         );
         
-        addObject(jackClass, 570, 380);
+        addObject(jackLobby, 570, 380);
         addObject(couch, 500, 430);
         
         Button start = new Button(
             "Start",
             "button2.png",
-            () -> Greenfoot.setWorld(new MainMenu())
+            () -> Greenfoot.setWorld(new SingleplayerPlaying())
         );
         addObject(start, 150, 350);
         
@@ -61,6 +61,8 @@ public class SingleplayerLobby extends World
             () -> Greenfoot.setWorld(new MainMenu())
         );
         addObject(back, 150, 410);
+        
+
 
     }
 }

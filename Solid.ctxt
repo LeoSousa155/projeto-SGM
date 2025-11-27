@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Solid
+comment0.text=\r\n\ Invisible\ collision\ block\ that\ lives\ in\ MAP\ coordinates.\r\n\ SingleplayerPlaying\ will\ position\ it\ on\ screen\ based\ on\ the\ camera.\r\n
+comment1.params=width\ height\ worldX\ worldY
+comment1.target=Solid(int,\ int,\ int,\ int)
+comment2.params=
+comment2.target=int\ getWorldX()
+comment3.params=
+comment3.target=int\ getWorldY()
+comment4.params=world
+comment4.target=void\ updateScreenPosition(SingleplayerPlaying)
+comment4.text=Update\ this\ solid's\ on-screen\ position\ based\ on\ the\ current\ camera.
+numComments=5

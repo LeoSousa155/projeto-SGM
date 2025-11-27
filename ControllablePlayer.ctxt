@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.target=ControllablePlayer
+comment0.text=\r\n\ Player\ that\ can\ move\ around\ the\ big\ map\ and\ controls\ the\ camera.\r\n\ Only\ use\ this\ (or\ subclasses)\ in\ SingleplayerPlaying.\r\n
+comment1.params=wx\ wy
+comment1.target=void\ setWorldLocation(int,\ int)
+comment1.text=Explicitly\ set\ map\ coordinates\ for\ this\ player.
+comment2.params=w
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment2.text=When\ added\ to\ the\ world,\ initialise\ world\ coords\ if\ not\ already.
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ afterMove()
+comment4.text=\r\n\ Subclasses\ can\ override\ this\ to\ do\ things\ after\ movement,\r\n\ like\ updating\ an\ animation.\r\n
+comment5.params=
+comment5.target=boolean\ handleStairTriggers()
+comment5.text=\r\n\ If\ W\ is\ pressed\ while\ touching\ an\ "up"\ StairTrigger,\ snap\ to\ that\ trigger's\ targetY.\r\n\ If\ S\ is\ pressed\ while\ touching\ a\ "down"\ StairTrigger,\ snap\ to\ its\ targetY.\r\n\ Returns\ true\ if\ a\ teleport\ happened,\ false\ otherwise.\r\n
+comment6.params=
+comment6.target=void\ moveWithCamera()
+comment7.params=targetX\ targetY
+comment7.target=int\ applySlopes(int,\ int)
+comment7.text=\r\n\ Returns\ a\ Y\ adjusted\ to\ sit\ on\ a\ SlopeArea\ surface\ if\ close\ enough,\r\n\ otherwise\ returns\ the\ original\ Y.\r\n
+comment8.params=targetX\ targetY
+comment8.target=boolean\ collidesAt(int,\ int)
+comment8.text=Checks\ if\ moving\ to\ (targetX,\ targetY)\ collides\ with\ a\ Solid\ object.
+numComments=9

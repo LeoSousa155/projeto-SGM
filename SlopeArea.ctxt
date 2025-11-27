@@ -1,0 +1,30 @@
+#BlueJ class context
+comment0.target=SlopeArea
+comment0.text=\r\n\ A\ mathematical\ sloped\ floor\ defined\ by\ two\ world-coordinate\ points\ (x1,y1)\ to\ (x2,y2).\r\n\ The\ collision\ surface\ is\ the\ line\ between\ those\ points.\r\n
+comment1.params=value
+comment1.target=void\ setFloorChangeSlope(boolean)
+comment10.params=
+comment10.target=int\ getHorizontalDirForUp()
+comment10.text=\r\n\ Returns\ +1\ if\ moving\ RIGHT\ along\ the\ slope\ goes\ up,\r\n\ and\ -1\ if\ moving\ LEFT\ along\ the\ slope\ goes\ up.\r\n
+comment11.params=world
+comment11.target=void\ updateScreenPosition(SingleplayerPlaying)
+comment11.text=Update\ this\ slope's\ on-screen\ position\ based\ on\ the\ current\ camera.
+comment2.params=
+comment2.target=boolean\ isFloorChangeSlope()
+comment3.params=x1\ y1\ x2\ y2
+comment3.target=SlopeArea(int,\ int,\ int,\ int)
+comment4.params=
+comment4.target=int\ getMinX()
+comment5.params=
+comment5.target=int\ getMaxX()
+comment6.params=wx
+comment6.target=int\ getYAtX(int)
+comment6.text=\r\n\ Returns\ the\ Y\ coordinate\ of\ the\ slope\ line\ at\ the\ given\ world\ X.\r\n\ Assumes\ x1\ \!\=\ x2.\r\n
+comment7.params=
+comment7.target=int\ getWorldX()
+comment8.params=
+comment8.target=int\ getWorldY()
+comment9.params=
+comment9.target=boolean\ isLeftToRightUp()
+comment9.text=True\ if\ going\ from\ left\ to\ right\ moves\ upward\ (towards\ smaller\ y).
+numComments=12

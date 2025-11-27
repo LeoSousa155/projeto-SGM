@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=JackLobby
+comment0.text=\r\n\ Jack\ used\ as\ a\ static\ image\ in\ the\ SingleplayerLobby.\r\n\ No\ movement,\ no\ controls.\r\n
+comment1.params=
+comment1.target=JackLobby()
+numComments=2

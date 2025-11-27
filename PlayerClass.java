@@ -1,17 +1,16 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 /**
- * Write a description of class Class here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Base player sprite, no controls.
+ * Use this (or subclasses) anywhere you just need an image.
  */
 public class PlayerClass extends Actor
 {
     public PlayerClass()
     {
         GreenfootImage img = new GreenfootImage("captain.png");
-        //img.scale(500, 500);   // <- resize here
         setImage(img);
     }
+
+    // No act() here – purely visual
 }
