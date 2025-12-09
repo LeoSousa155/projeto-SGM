@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=CaptainMinigameTrigger
+comment0.text=\r\n\ CaptainMinigameTrigger\r\n\r\n\ Placed\ on\ the\ big\ boat\ map\ (e.g.\ at\ the\ steering\ wheel).\r\n\ When\ the\ player\ is\ close\ and\ presses\ E,\ it\ opens\ the\ Captain\ minigame.\r\n\r\n\ SingleplayerPlaying\ must\ implement\ CaptainMinigameController.ResultListener.\r\n
+comment1.params=worldX\ worldY
+comment1.target=CaptainMinigameTrigger(int,\ int)
+comment2.params=world
+comment2.target=void\ updateScreenPosition(SingleplayerPlaying)
+comment2.text=\r\n\ Called\ from\ SingleplayerPlaying.updateAllSolidPositions()\r\n\ to\ place\ this\ trigger\ on\ screen\ according\ to\ the\ camera.\r\n
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ checkInteraction()
+comment5.params=world
+comment5.target=void\ openMinigame(greenfoot.World)
+comment5.text=\r\n\ Starts\ the\ Captain\ minigame\ by\ placing\ a\ PanelBoard\ and\r\n\ creating\ a\ CaptainMinigameController.\r\n
+numComments=6

@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=MoneyDisplay
+comment0.text=\r\n\ Displays\ the\ player's\ money\ at\ the\ top\ of\ the\ screen.\r\n\ Also\ acts\ as\ a\ simple\ global\ money\ manager.\r\n\r\n\ Usage\:\r\n\ \ \ -\ Add\ ONE\ MoneyDisplay\ object\ to\ the\ world\ (e.g.\ SingleplayerPlaying)\r\n\ \ \ -\ Call\ MoneyDisplay.addMoney(+100)\ or\ MoneyDisplay.addMoney(-100)\r\n\ \ \ -\ It\ starts\ at\ 0$\ by\ default\ (or\ call\ resetMoney()\ when\ a\ new\ game\ starts)\r\n
+comment1.params=
+comment1.target=MoneyDisplay()
+comment2.params=
+comment2.target=void\ resetMoney()
+comment2.text=Reset\ money\ to\ 0$\ (e.g.\ at\ the\ start\ of\ a\ new\ game).
+comment3.params=delta
+comment3.target=void\ addMoney(int)
+comment3.text=Add\ (or\ subtract)\ money.\ Negative\ values\ are\ allowed.
+comment4.params=
+comment4.target=int\ getMoney()
+comment4.text=Get\ current\ money\ value.
+comment5.params=
+comment5.target=void\ redraw()
+comment5.text=Re-draw\ the\ text\ image.
+comment6.params=
+comment6.target=void\ act()
+numComments=7

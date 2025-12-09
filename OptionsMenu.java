@@ -110,7 +110,7 @@ public class OptionsMenu extends World
         // Close the old panel (if any)
         if (currentPanel != null && currentPanel.getWorld() != null)
         {
-            currentPanel.removePanel();
+            currentPanel.destroy();
         }
     
         // Add and activate the new one

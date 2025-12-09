@@ -4,7 +4,7 @@ import java.util.List;
 /**
  * World where the player walks around a big map and the camera follows.
  */
-public class SingleplayerPlaying extends World
+public class SingleplayerPlaying extends World implements CaptainMinigameController.ResultListener
 {
     // Size of the visible window (camera view)
     public static final int VIEW_WIDTH  = 800;
@@ -31,13 +31,27 @@ public class SingleplayerPlaying extends World
     {
         MusicManager.onScenarioStopped();
     }
+    
+    @Override
+    public void onCaptainMinigameSuccess() {
+        // currently empty – money is already handled inside the minigame
+    }
+
+    @Override
+    public void onCaptainMinigameFailure() {
+        // currently unused; rock penalty is handled inside the minigame
+    }
 
     public SingleplayerPlaying()
     {
         // World size = window size, not full map size
         super(VIEW_WIDTH, VIEW_HEIGHT, 1, false);
 
-        setPaintOrder(ControllablePlayer.class, StairTrigger.class);
+        setPaintOrder(
+            Button.class, Text.class, 
+            CaptainBoat.class, CaptainGoalZone.class, CaptainRock.class, CaptainGameBackground.class, PanelBoard.class,
+            ControllablePlayer.class, StairTrigger.class
+        );
         
         // Optional: turn on collision debug visuals
         Solid.DEBUG = false;      // set to false when you're happy
@@ -75,8 +89,6 @@ public class SingleplayerPlaying extends World
         // Floor collisions
 
         // --- Slope surface ---
-        // Adjust these four coordinates to match the visual staircase.
-        // Example: slope going up from left (x1,y1) to right (x2,y2).
         SlopeArea medSlope = new SlopeArea(2000, 800, 500, 750);
         addObject(medSlope, 0, 0);
         
@@ -103,8 +115,8 @@ public class SingleplayerPlaying extends World
             StairTrigger.TYPE_UP,
             1120, 765,     // trigger area world pos (x, y)
             900, 565,      // teleport target (x, y)
-            100, 60,        // scale
-            225             // rotation
+            100, 60,
+            225
         );
         addObject(upMedTrigger, 0, 0);
         
@@ -121,8 +133,8 @@ public class SingleplayerPlaying extends World
             StairTrigger.TYPE_UP,
             1170, 915,     // trigger area world pos (x, y)
             920, 765,      // teleport target (x, y)
-            100, 60,        // scale
-            225             // rotation
+            100, 60,
+            225
         );
         addObject(upLowTrigger, 0, 0);
         
@@ -135,6 +147,12 @@ public class SingleplayerPlaying extends World
         );
         addObject(downMedTrigger, 0, 0);
         
+        // --- Captain minigame trigger on the captain's cabin ---
+        CaptainMinigameTrigger captainTrigger = new CaptainMinigameTrigger(
+            900, 565
+        );
+        addObject(captainTrigger, 0, 0);
+
         // --- UI buttons (fixed to the screen) ---
         Button mainMenu = new Button(
             "MainMenu",
@@ -149,6 +167,11 @@ public class SingleplayerPlaying extends World
             () -> Greenfoot.setWorld(new OptionsMenuGame())
         );
         addObject(option, 100, 20);
+
+        // --- Money display between Options and Main Menu ---
+        MoneyDisplay.resetMoney();  // start at 0$ for this game
+        MoneyDisplay moneyDisplay = new MoneyDisplay();
+        addObject(moneyDisplay, VIEW_WIDTH / 2, 20); // x=400, between 100 and 700
 
         // After everything is added, ensure solids & slope are placed correctly
         updateAllSolidPositions();
@@ -210,7 +233,7 @@ public class SingleplayerPlaying extends World
         setBackground(view);
     }
 
-    /** Reposition all Solid and SlopeArea blocks according to the current camera. */
+    /** Reposition all Solid, SlopeArea, StairTrigger and CaptainMinigameTrigger blocks according to the current camera. */
     private void updateAllSolidPositions()
     {
         List<Solid> solids = getObjects(Solid.class);
@@ -225,11 +248,25 @@ public class SingleplayerPlaying extends World
             sa.updateScreenPosition(this);
         }
     
-        // NEW: update stair trigger positions
+        // Stair triggers
         List<StairTrigger> triggers = getObjects(StairTrigger.class);
         for (StairTrigger st : triggers)
         {
             st.updateScreenPosition(this);
         }
+
+        // Captain minigame trigger
+        List<CaptainMinigameTrigger> captainTriggers =
+            getObjects(CaptainMinigameTrigger.class);
+        for (CaptainMinigameTrigger ct : captainTriggers)
+        {
+            ct.updateScreenPosition(this);
+        }
+    }
+
+    /** Called once per frame. Used here to tick the minigame reopen cooldown. */
+    public void act()
+    {
+        CaptainMinigameController.tickReopenTimer();
     }
 }

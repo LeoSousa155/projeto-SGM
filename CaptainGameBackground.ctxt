@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=CaptainGameBackground
+comment0.text=\r\n\ Background\ image\ for\ the\ Captain\ minigame.\r\n\ Placed\ inside\ the\ PanelBoard\ BEFORE\ all\ gameplay\ actors.\r\n
+comment1.params=
+comment1.target=CaptainGameBackground()
+comment2.params=
+comment2.target=void\ act()
+numComments=3

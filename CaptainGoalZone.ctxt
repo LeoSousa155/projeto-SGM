@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=CaptainGoalZone
+comment0.text=\r\n\ Goal\ area\ for\ the\ Captain\ minigame.\r\n\ When\ the\ CaptainBoat\ touches\ this\ zone,\ the\ minigame\ succeeds.\r\n\r\n\ This\ actor\ should\ typically\ be\ semi-transparent.\r\n
+comment1.params=
+comment1.target=CaptainGoalZone()
+comment2.params=
+comment2.target=void\ act()
+numComments=3

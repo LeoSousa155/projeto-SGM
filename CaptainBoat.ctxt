@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=CaptainBoat
+comment0.text=\r\n\ Boat\ controlled\ in\ the\ Captain\ minigame.\r\n\ Moves\ inside\ a\ PanelBoard\ using\ WASD\ or\ arrow\ keys.\r\n
+comment1.params=board\ controller
+comment1.target=CaptainBoat(PanelBoard,\ CaptainMinigameController)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ handleMovement()
+comment4.params=rock
+comment4.target=void\ handleRockHit(CaptainRock)
+comment5.params=text
+comment5.target=void\ showMessage(java.lang.String)
+comment6.params=
+comment6.target=void\ updateMessage()
+numComments=7

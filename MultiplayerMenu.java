@@ -63,7 +63,7 @@ public class MultiplayerMenu extends World
     private void openPanel(PanelBoard newPanel, int x, int y)
     {
         if (currentPanel != null && currentPanel.getWorld() != null) {
-            currentPanel.removePanel();   // assumes your PanelBoard.removePanel() works
+            currentPanel.destroy();
         }
         addObject(newPanel, x, y);
         currentPanel = newPanel;
