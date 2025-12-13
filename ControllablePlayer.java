@@ -53,9 +53,9 @@ public class ControllablePlayer extends PlayerClass
     public void act()
     {
         // ===== BLOCK MOVEMENT DURING MINIGAMES =====
-        if (CaptainMinigameController.areControlsLocked())
+        if (MinigameLock.isLocked())
             return;
-        
+
         // 1) Try stair triggers first (W/S)
         if (handleStairTriggers())
         {

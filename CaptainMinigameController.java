@@ -68,10 +68,18 @@ public class CaptainMinigameController
         this.listener = listener;
 
         // Allow board to call our update() each frame
-        board.attachController(this);
+        board.attachControllerAdapter(new PanelBoard.ControllerAdapter() {
+            public void update() { CaptainMinigameController.this.update(); }
+        });
 
         // Lock normal character controls while the minigame is active
-        setControlsLocked(true);
+        //setControlsLocked(true);
+        if (!MinigameLock.tryLock())
+        {
+            // Another minigame is already open; just destroy this board and abort.
+            board.destroy();
+            return;
+        }
 
         setupMinigame();
     }
@@ -86,17 +94,27 @@ public class CaptainMinigameController
 
         // --- Create the boat ---
         boat = new CaptainBoat(board, this);
-        board.addContent(boat, 0, 0); // center of board
+        board.addContent(boat, -250, 150); // center of board
 
+        // Boat collision box (smaller than sprite)
+        CollisionBox boatBox = new CollisionBox(boat, 40, 25, 0, 0);
+        board.addContent(boatBox, 0, 0);
+        boat.setCollisionBox(boatBox);
+        
         // --- Place goal zone ---
         CaptainGoalZone goal = new CaptainGoalZone();
-        board.addContent(goal, 0, -120); // adjust values as desired
+        board.addContent(goal, 250, -150);
+        
+        // Goal collision box (tight around the fish body)
+        CollisionBox goalBox = new CollisionBox(goal, 35, 20, 0, 0);
+        board.addContent(goalBox, 0, 0);
 
         // --- Place a few rocks ---
         addRock(-100, 50);
-        addRock(120, 20);
+        addRock(130, -20);
         addRock(0, 100);
-
+        addRock(80, -100);
+        
         // --- ESC key listener (invisible actor on top of the board) ---
         EscListener escListener = new EscListener();
         board.addContent(escListener, 0, 0);
@@ -118,6 +136,8 @@ public class CaptainMinigameController
     {
         CaptainRock rock = new CaptainRock();
         board.addContent(rock, offsetX, offsetY);
+        
+        rock.attachCollisionBox(board);
     }
 
     /**
@@ -174,8 +194,9 @@ public class CaptainMinigameController
                     board.removeContent(successMessage);
 
                 cleanup();  // remove panel & contents
-                setControlsLocked(false);
-
+                //setControlsLocked(false);
+                MinigameLock.setLocked(false);
+                
                 // Start cooldown so the trigger can reopen after 1 second
                 reopenCooldown = 60;
 
@@ -199,7 +220,8 @@ public class CaptainMinigameController
         finished = true;
 
         cleanup();
-        setControlsLocked(false);
+        //setControlsLocked(false);
+        MinigameLock.setLocked(false);
 
         // Start cooldown so player can reopen after 1 second
         reopenCooldown = 60;

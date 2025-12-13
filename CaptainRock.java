@@ -5,17 +5,21 @@ import greenfoot.*;
  * If the CaptainBoat touches a rock, the minigame is failed.
  */
 public class CaptainRock extends Actor
-{
-    // Change these to resize the rock sprite
-    private static final int ROCK_WIDTH  = 50;  // px
-    private static final int ROCK_HEIGHT = 50;  // px
+{   
+    private CollisionBox collisionBox;
 
     public CaptainRock()
     {
         // TODO: replace with actual rock sprite
-        GreenfootImage img = new GreenfootImage("couch.png");
-        img.scale(ROCK_WIDTH, ROCK_HEIGHT);
+        GreenfootImage img = new GreenfootImage("rockstopdown.png");
+        img.scale(50, 50);
         setImage(img);
+    }
+    
+    public void attachCollisionBox(PanelBoard board)
+    {
+        collisionBox = new CollisionBox(this, 30, 30, 0, 0);
+        board.addContent(collisionBox, 0, 0);
     }
 
     public void act()

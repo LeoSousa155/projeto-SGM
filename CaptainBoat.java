@@ -11,13 +11,14 @@ public class CaptainBoat extends Actor
     private PanelBoard board;
     private CaptainMinigameController controller;
 
-    // Change these two values to resize the boat sprite:
-    private static final int BOAT_WIDTH  = 60;   // pixels
-    private static final int BOAT_HEIGHT = 40;   // pixels
-
     // Speed in pixels per frame
     private int speed = 4;
+    
+    private CollisionBox collisionBox;
 
+    // Prevent movement while "You crashed..." is showing
+    private boolean movementLocked = false;
+    
     // Track rocks that have already been hit (no more collision penalty)
     private List<CaptainRock> disabledRocks = new ArrayList<CaptainRock>();
 
@@ -31,33 +32,38 @@ public class CaptainBoat extends Actor
         this.controller = controller;
 
         // TODO: replace with your actual top-down boat sprite name
-        GreenfootImage img = new GreenfootImage("couch.png");
-        img.scale(BOAT_WIDTH, BOAT_HEIGHT);
+        GreenfootImage img = new GreenfootImage("boattopdown2.png");
+        img.scale(120, 36);
         setImage(img);
     }
-
+    
     public void act()
     {
         if (board == null || controller == null || controller.isFinished())
             return;
-
-        handleMovement();
-        updateMessage();
-
-        // --- ROCK COLLISIONS (lose 100$, show message, rock becomes ghost) ---
-        CaptainRock rock = (CaptainRock)getOneIntersectingObject(CaptainRock.class);
-        if (rock != null && !disabledRocks.contains(rock))
+    
+        updateMessage(); // update timer FIRST, so unlock can happen ASAP
+    
+        if (!movementLocked)
         {
-            handleRockHit(rock);
+            handleMovement();
         }
-
-        // --- GOAL COLLISION (still immediate success for now) ---
+    
+        // --- ROCK COLLISIONS ---
+        CollisionBox box = collisionBox.getOneIntersectingPublic(CollisionBox.class);
+        if (box != null && box.getOwner() instanceof CaptainRock)
+        {
+            CaptainRock rock = (CaptainRock) box.getOwner();
+            if (!disabledRocks.contains(rock))
+                handleRockHit(rock);
+        }
+    
         // --- GOAL COLLISION ---
-        if (isTouching(CaptainGoalZone.class))
+        CollisionBox box2 = collisionBox.getOneIntersectingPublic(CollisionBox.class);
+        if (box2 != null && box2.getOwner() instanceof CaptainGoalZone)
         {
             controller.notifyGoalReached();
         }
-
     }
 
     // ========================= MOVEMENT =========================
@@ -66,54 +72,57 @@ public class CaptainBoat extends Actor
     {
         int dx = 0;
         int dy = 0;
-
+    
         if (Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("left"))  dx -= speed;
         if (Greenfoot.isKeyDown("d") || Greenfoot.isKeyDown("right")) dx += speed;
         if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up"))    dy -= speed;
         if (Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down"))  dy += speed;
-
+    
         if (dx == 0 && dy == 0)
             return;
-
+    
+        // NEW: rotate to match movement direction (includes diagonals)
+        faceDirection(dx, dy);
+    
         int newX = getX() + dx;
         int newY = getY() + dy;
-
+    
         // Clamp so the boat never leaves the inside of the PanelBoard
         if (board != null)
         {
             int halfW = board.getHalfWidth();
             int halfH = board.getHalfHeight();
-
+    
             int left   = board.getX() - halfW  + getImage().getWidth()  / 2;
             int right  = board.getX() + halfW  - getImage().getWidth()  / 2;
             int top    = board.getY() - halfH  + getImage().getHeight() / 2;
             int bottom = board.getY() + halfH  - getImage().getHeight() / 2;
-
+    
             if (newX < left)   newX = left;
             if (newX > right)  newX = right;
             if (newY < top)    newY = top;
             if (newY > bottom) newY = bottom;
         }
-
+    
         setLocation(newX, newY);
     }
+
 
     // ========================= ROCK HIT LOGIC =========================
 
     private void handleRockHit(CaptainRock rock)
     {
-        // Mark as disabled so future collisions with this rock do nothing
         disabledRocks.add(rock);
-
-        // Make the rock more transparent (visual feedback)
+    
         GreenfootImage rockImg = new GreenfootImage(rock.getImage());
-        rockImg.setTransparency(80); // mostly ghosted
+        rockImg.setTransparency(80);
         rock.setImage(rockImg);
-
-        // Lose 100$
+    
         MoneyDisplay.addMoney(-100);
-
-        // Show crash message in the middle of the board
+    
+        // Lock movement for the same duration as the message
+        movementLocked = true;
+    
         showMessage("You crashed...");
     }
 
@@ -153,6 +162,27 @@ public class CaptainBoat extends Actor
                 board.removeContent(messageActor);
             }
             messageActor = null;
+    
+            // Message ended -> unlock movement
+            movementLocked = false;
         }
+    }
+    
+    public void setCollisionBox(CollisionBox box)
+    {
+        this.collisionBox = box;
+    }
+    
+    private void faceDirection(int dx, int dy)
+    {
+        if (dx == 0 && dy == 0) return;
+    
+        // atan2 gives angle in radians. Greenfoot rotation: 0=right, 90=down.
+        int angle = (int) Math.round(Math.toDegrees(Math.atan2(dy, dx)));
+    
+        // Keep it in 0..359
+        if (angle < 0) angle += 360;
+    
+        setRotation(angle);
     }
 }

@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=MinigameLock
+comment1.params=
+comment1.target=boolean\ isLocked()
+comment2.params=value
+comment2.target=void\ setLocked(boolean)
+comment3.params=
+comment3.target=boolean\ tryLock()
+comment3.text=Returns\ true\ if\ it\ successfully\ locked;\ false\ if\ already\ locked.
+numComments=4

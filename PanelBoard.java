@@ -12,7 +12,10 @@ public class PanelBoard extends Actor
 {
     private List<Actor> contents = new ArrayList<Actor>();
     private GreenfootImage baseImage;
-    private CaptainMinigameController controller;
+    
+    public interface ControllerAdapter { void update(); }
+
+    private ControllerAdapter controller;
     
     public PanelBoard(String imageFile) 
     {
@@ -39,7 +42,7 @@ public class PanelBoard extends Actor
             controller.update();
     }
     
-    public void attachController(CaptainMinigameController c)
+    public void attachControllerAdapter(ControllerAdapter c)
     {
         controller = c;
     }

@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=CollisionBox
+comment1.params=owner\ width\ height\ offsetX\ offsetY
+comment1.target=CollisionBox(greenfoot.Actor,\ int,\ int,\ int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=greenfoot.Actor\ getOwner()
+comment4.params=cls
+comment4.target=greenfoot.Actor\ getOneIntersectingPublic(java.lang.Class)
+comment4.text=Public\ wrapper\ around\ Actor's\ protected\ collision\ query
+numComments=5

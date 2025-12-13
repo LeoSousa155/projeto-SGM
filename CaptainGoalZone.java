@@ -8,15 +8,11 @@ import greenfoot.*;
  */
 public class CaptainGoalZone extends Actor
 {
-    // Change these to resize the goal zone
-    private static final int GOAL_WIDTH  = 120; // px
-    private static final int GOAL_HEIGHT = 80;  // px
-
     public CaptainGoalZone()
     {
         // TODO: replace with actual goal-zone sprite
-        GreenfootImage img = new GreenfootImage("couch.png");
-        img.scale(GOAL_WIDTH, GOAL_HEIGHT);
+        GreenfootImage img = new GreenfootImage("goalfish.png");
+        img.scale(70, 40);
 
         // Optional: make the zone slightly see-through
         img.setTransparency(180);

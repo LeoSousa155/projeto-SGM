@@ -20,16 +20,22 @@ public class CaptainMinigameTrigger extends Actor
 
     // Debounce for the E key
     private boolean canUseKey = true;
+    
+    private GreenfootImage visibleImg;
+    private GreenfootImage hiddenImg;
+    private boolean isVisibleNow = false; // track state to avoid re-setting every frame
 
     public CaptainMinigameTrigger(int worldX, int worldY)
     {
         this.worldX = worldX;
         this.worldY = worldY;
 
-        // TEMP: using couch image as placeholder helm
-        GreenfootImage img = new GreenfootImage("couch.png");
-        img.scale(150, 50);
-        setImage(img);
+        visibleImg = new GreenfootImage("CaptainTrigger.png");
+        visibleImg.scale(90, 106);
+
+        hiddenImg = new GreenfootImage(1, 1); // transparent by default
+
+        setImage(hiddenImg); // start hidden
     }
 
     /**
@@ -45,16 +51,39 @@ public class CaptainMinigameTrigger extends Actor
 
     public void act()
     {
+        updateVisibility();
         checkInteraction();
     }
 
+    private void updateVisibility()
+    {
+        World w = getWorld();
+        if (!(w instanceof SingleplayerPlaying)) return;
+
+        List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
+        if (players == null || players.isEmpty()) return;
+        ControllablePlayer player = players.get(0);
+
+        int dx = player.getX() - getX();
+        int dy = player.getY() - getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        boolean shouldBeVisible = distance <= activationDistance;
+
+        if (shouldBeVisible != isVisibleNow)
+        {
+            setImage(shouldBeVisible ? visibleImg : hiddenImg);
+            isVisibleNow = shouldBeVisible;
+        }
+    }
+    
     private void checkInteraction()
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
 
         // If a Captain minigame is currently running, ignore interaction
-        if (CaptainMinigameController.areControlsLocked())
+        if (MinigameLock.isLocked())
             return;
 
         // If we're still in cooldown after closing, ignore interaction

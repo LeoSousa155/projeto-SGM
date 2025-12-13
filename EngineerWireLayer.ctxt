@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=EngineerWireLayer
+comment1.params=width\ height
+comment1.target=EngineerWireLayer(int,\ int)
+comment2.params=worldX
+comment2.target=int\ toLocalX(int)
+comment2.text=World\ coords\ ->\ layer\ local\ coords\ helper
+comment3.params=worldY
+comment3.target=int\ toLocalY(int)
+comment4.params=worldX1\ worldY1\ worldX2\ worldY2\ color
+comment4.target=void\ addPermanentLine(int,\ int,\ int,\ int,\ greenfoot.Color)
+comment5.params=img\ x1\ y1\ x2\ y2\ color\ thickness
+comment5.target=void\ drawThickLine(greenfoot.GreenfootImage,\ int,\ int,\ int,\ int,\ greenfoot.Color,\ int)
+comment6.params=worldX1\ worldY1\ worldX2\ worldY2\ color
+comment6.target=void\ setTempLine(int,\ int,\ int,\ int,\ greenfoot.Color)
+comment7.params=
+comment7.target=void\ clearTempLine()
+comment8.params=
+comment8.target=void\ redraw()
+numComments=9

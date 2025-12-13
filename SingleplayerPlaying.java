@@ -4,7 +4,8 @@ import java.util.List;
 /**
  * World where the player walks around a big map and the camera follows.
  */
-public class SingleplayerPlaying extends World implements CaptainMinigameController.ResultListener
+public class SingleplayerPlaying extends World 
+implements CaptainMinigameController.ResultListener, EngineerMinigameController.ResultListener
 {
     // Size of the visible window (camera view)
     public static final int VIEW_WIDTH  = 800;
@@ -33,14 +34,16 @@ public class SingleplayerPlaying extends World implements CaptainMinigameControl
     }
     
     @Override
-    public void onCaptainMinigameSuccess() {
-        // currently empty – money is already handled inside the minigame
-    }
-
+    public void onCaptainMinigameSuccess() {}
+    
     @Override
-    public void onCaptainMinigameFailure() {
-        // currently unused; rock penalty is handled inside the minigame
-    }
+    public void onCaptainMinigameFailure() {}
+    
+    @Override
+    public void onEngineerMinigameSuccess() {}
+    
+    @Override
+    public void onEngineerMinigameFailure() {}
 
     public SingleplayerPlaying()
     {
@@ -49,7 +52,9 @@ public class SingleplayerPlaying extends World implements CaptainMinigameControl
 
         setPaintOrder(
             Button.class, Text.class, 
-            CaptainBoat.class, CaptainGoalZone.class, CaptainRock.class, CaptainGameBackground.class, PanelBoard.class,
+            CaptainBoat.class, CaptainGoalZone.class, CaptainRock.class, CaptainGameBackground.class,
+            EngineerWirePeg.class, EngineerWireLayer.class, EngineerGameBackground.class,
+            PanelBoard.class,
             ControllablePlayer.class, StairTrigger.class
         );
         
@@ -74,10 +79,16 @@ public class SingleplayerPlaying extends World implements CaptainMinigameControl
 
         // --- Create Solid collision blocks ---
 
-        // Left border
+        // Left borders
         int leftWidth = playMinX;
         Solid leftWall = new Solid(leftWidth, mapHeight, leftWidth / 2, mapHeight / 2);
         addObject(leftWall, 0, 0); // real position will be set in centerOn()
+        
+        Solid leftUpWall = new Solid(20, mapHeight, 800, mapHeight / 30);
+        addObject(leftUpWall, 0, 0);
+        
+        Solid leftMidWall = new Solid(20, mapHeight, 700, mapHeight / 5);
+        addObject(leftMidWall, 0, 0);
 
         // Right border
         int rightWidth = mapWidth - playMaxX;
@@ -85,6 +96,12 @@ public class SingleplayerPlaying extends World implements CaptainMinigameControl
                                     playMaxX + rightWidth / 2,
                                     mapHeight / 2);
         addObject(rightWall, 0, 0);
+        
+        Solid rightUpWall = new Solid(20, mapHeight, 1150, mapHeight / 30);
+        addObject(rightUpWall, 0, 0);
+        
+        Solid rightMidWall = new Solid(20, mapHeight, 1280, mapHeight / 5);
+        addObject(rightMidWall, 0, 0);
 
         // Floor collisions
 
@@ -149,9 +166,15 @@ public class SingleplayerPlaying extends World implements CaptainMinigameControl
         
         // --- Captain minigame trigger on the captain's cabin ---
         CaptainMinigameTrigger captainTrigger = new CaptainMinigameTrigger(
-            900, 565
+            843, 564
         );
         addObject(captainTrigger, 0, 0);
+        
+        // --- Engineer minigame trigger on the engine room ---
+        EngineerMinigameTrigger engineerTrigger = new EngineerMinigameTrigger(
+            1440, 950
+        );
+        addObject(engineerTrigger, 0, 0);
 
         // --- UI buttons (fixed to the screen) ---
         Button mainMenu = new Button(
@@ -262,11 +285,19 @@ public class SingleplayerPlaying extends World implements CaptainMinigameControl
         {
             ct.updateScreenPosition(this);
         }
+        
+        // Engineer minigame trigger
+        List<EngineerMinigameTrigger> engineerTriggers = getObjects(EngineerMinigameTrigger.class);
+        for (EngineerMinigameTrigger et : engineerTriggers)
+        {
+            et.updateScreenPosition(this);
+        }
     }
 
     /** Called once per frame. Used here to tick the minigame reopen cooldown. */
     public void act()
     {
         CaptainMinigameController.tickReopenTimer();
+        EngineerMinigameController.tickReopenTimer();
     }
 }

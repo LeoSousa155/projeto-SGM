@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=EngineerWirePeg
+comment1.params=side\ wireColor
+comment1.target=EngineerWirePeg(EngineerWirePeg.Side,\ EngineerWirePeg.WireColor)
+comment2.params=
+comment2.target=EngineerWirePeg.Side\ getSide()
+comment3.params=
+comment3.target=EngineerWirePeg.WireColor\ getWireColor()
+comment4.params=
+comment4.target=boolean\ isMatched()
+comment5.params=value
+comment5.target=void\ setMatched(boolean)
+comment6.params=dim
+comment6.target=void\ redraw(boolean)
+comment7.params=wc
+comment7.target=greenfoot.Color\ toColor(EngineerWirePeg.WireColor)
+numComments=8
