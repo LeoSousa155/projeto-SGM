@@ -1,24 +1,21 @@
 import greenfoot.*;
 
-/**
- * Displays the player's money at the top of the screen.
- * Also acts as a simple global money manager.
- *
- * Usage:
- *   - Add ONE MoneyDisplay object to the world (e.g. SingleplayerPlaying)
- *   - Call MoneyDisplay.addMoney(+100) or MoneyDisplay.addMoney(-100)
- *   - It starts at 0$ by default (or call resetMoney() when a new game starts)
- */
 public class MoneyDisplay extends Actor
 {
-    // Global money value for the game
     private static int money = 0;
-    
-    // Keep a reference to the on-screen instance so we can update its image
+
+    private static int moneyGained = 0;
+    private static int moneyLost = 0;
+
     private static MoneyDisplay instance;
 
-    // Text config
     private static final int FONT_SIZE = 24;
+
+    private static boolean endShown = false;
+
+    // ✅ NEW: schedule endgame for NEXT frame
+    private static boolean endPending = false;
+    private static boolean pendingWin = false;
 
     public MoneyDisplay()
     {
@@ -26,49 +23,81 @@ public class MoneyDisplay extends Actor
         redraw();
     }
 
-    /** Reset money to 0$ (e.g. at the start of a new game). */
+    public static void debugSetMoney(int value)
+    {
+        money = value;
+        moneyGained = Math.max(0, value);
+        moneyLost = 0;
+
+        endShown = false;
+        endPending = false;
+
+        if (instance != null) instance.redraw();
+    }
+
     public static void resetMoney()
     {
         money = 0;
-        if (instance != null)
-        {
-            instance.redraw();
-        }
+        moneyGained = 0;
+        moneyLost = 0;
+
+        endShown = false;
+        endPending = false;
+
+        if (instance != null) instance.redraw();
     }
 
-    /** Add (or subtract) money. Negative values are allowed. */
     public static void addMoney(int delta)
     {
-        money += delta;  // <-- no clamping; can go negative
-    
-        if (instance != null)
+        money += delta;
+
+        if (delta > 0) moneyGained += delta;
+        if (delta < 0) moneyLost += -delta;
+
+        if (instance != null) instance.redraw();
+
+        checkEndgameSchedule(); // ✅ schedule only
+    }
+
+    public static int getMoney() { return money; }
+    public static int getMoneyGained() { return moneyGained; }
+    public static int getMoneyLost() { return moneyLost; }
+
+    private static void checkEndgameSchedule()
+    {
+        if (endShown || endPending) return;
+
+        if (money >= 1000)
         {
-            instance.redraw();
+            endShown = true;
+            endPending = true;
+            pendingWin = true;
+        }
+        else if (money <= -1000)
+        {
+            endShown = true;
+            endPending = true;
+            pendingWin = false;
         }
     }
 
-    /** Get current money value. */
-    public static int getMoney()
+    // ✅ Call this from the World act() (next frame)
+    public static void processEndgameIfPending(World w)
     {
-        return money;
+        if (!endPending) return;
+        endPending = false;
+
+        // Close any active minigame safely (we are now in a NEW frame)
+        if (MinigameLock.isLocked())
+            MinigameLock.forceCloseActiveMinigame();
+
+        // Show panel
+        EndgamePanel.show(w, pendingWin);
     }
 
-    /** Re-draw the text image. */
     private void redraw()
     {
         String text = money + " $";
-
-        // Transparent/soft background behind the text
-        Color textColor = Color.WHITE;
-        Color bgColor = new Color(0, 0, 0, 128); // semi-transparent black
-
-        GreenfootImage img = new GreenfootImage(text, FONT_SIZE, textColor, bgColor);
-        setImage(img);
-    }
-
-    public void act()
-    {
-        // No per-frame logic needed for now.
-        // Kept here in case you want flashing or animation later.
+        setImage(new GreenfootImage(text, FONT_SIZE, Color.WHITE, new Color(0,0,0,128)));
     }
 }

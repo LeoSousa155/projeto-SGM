@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=EndgamePanel
+comment1.params=world\ win
+comment1.target=void\ show(greenfoot.World,\ boolean)
+numComments=2

@@ -1,0 +1,27 @@
+#BlueJ class context
+comment0.target=FishermanFishData
+comment1.params=
+comment1.target=java.util.List\ getAllSpecies()
+comment10.params=
+comment10.target=FishSpecies\ rollFish()
+comment11.params=
+comment11.target=FishRarity\ rollRarity()
+comment12.params=rarity
+comment12.target=FishSpecies\ randomFromRarity(FishRarity)
+comment2.params=fish\ caught
+comment2.target=void\ logAttempt(FishSpecies,\ boolean)
+comment3.params=
+comment3.target=java.util.List\ getAttempts()
+comment4.params=
+comment4.target=boolean\ hasPendingCaught()
+comment5.params=
+comment5.target=FishermanFishData.FishAttempt\ peekNextPending()
+comment6.params=
+comment6.target=FishermanFishData.FishAttempt\ popNextPending()
+comment7.params=
+comment7.target=void\ logBiologistRelease()
+comment8.params=
+comment8.target=int\ getFishesReleased()
+comment9.params=
+comment9.target=int\ getFishesFished()
+numComments=13

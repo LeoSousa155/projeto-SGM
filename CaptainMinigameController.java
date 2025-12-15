@@ -80,6 +80,11 @@ public class CaptainMinigameController
             board.destroy();
             return;
         }
+        
+        MinigameLock.registerForceClose(() -> {
+            finished = true;
+            cleanup(); // destroys panelboard safely
+        });
 
         setupMinigame();
     }
@@ -170,6 +175,8 @@ public class CaptainMinigameController
         // Add money
         MoneyDisplay.addMoney(+100);
 
+        if (!boardAlive()) return;
+        
         // Show success message
         successMessage = new Text("You arrived!", 32, Color.GREEN);
         board.addContent(successMessage, 0, 0);
@@ -178,6 +185,11 @@ public class CaptainMinigameController
         exitTimer = 90;
     }
 
+    private boolean boardAlive()
+    {
+        return board != null && board.getWorld() != null;
+    }
+    
     /**
      * Called every frame from PanelBoard.act().
      * Handles the delayed closing after success.

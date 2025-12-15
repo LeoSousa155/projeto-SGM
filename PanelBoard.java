@@ -113,6 +113,22 @@ public class PanelBoard extends Actor
     }
 
     /**
+     * Removes all children that were added to this panel, but keeps the panel itself.
+     */
+    public void clearContents()
+    {
+        World w = getWorld();
+        if (w == null) return;
+
+        for (Actor a : contents)
+        {
+            if (a != null && a.getWorld() != null)
+                w.removeObject(a);
+        }
+        contents.clear();
+    }
+
+    /**
      * Destroys the panel and all of its children.
      * Call this when the minigame finishes.
      */

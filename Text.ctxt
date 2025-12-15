@@ -1,8 +1,12 @@
 #BlueJ class context
 comment0.target=Text
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Text\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Text\ actor\ with\ optional\ black\ outline.\r\n
 comment1.params=content\ fontSize\ color
 comment1.target=Text(java.lang.String,\ int,\ greenfoot.Color)
-comment2.params=content\ fontSize\ color
-comment2.target=void\ updateText(java.lang.String,\ int,\ greenfoot.Color)
-numComments=3
+comment2.params=content\ fontSize\ color\ outlined
+comment2.target=Text(java.lang.String,\ int,\ greenfoot.Color,\ boolean)
+comment3.params=content\ fontSize\ color
+comment3.target=void\ updateText(java.lang.String,\ int,\ greenfoot.Color)
+comment4.params=
+comment4.target=greenfoot.GreenfootImage\ createTextImage()
+numComments=5

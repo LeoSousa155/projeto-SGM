@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=FishRarity
+comment1.params=label\ weightPercent\ value
+comment1.target=FishRarity(java.lang.String,\ int,\ int)
+numComments=2

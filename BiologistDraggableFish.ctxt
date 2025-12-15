@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=BiologistDraggableFish
+comment1.params=imageFile\ controller
+comment1.target=BiologistDraggableFish(java.lang.String,\ BiologistMinigameController)
+comment2.params=canDrag
+comment2.target=void\ setDraggable(boolean)
+comment3.params=
+comment3.target=void\ snapHome()
+comment4.params=w
+comment4.target=void\ addedToWorld(greenfoot.World)
+comment5.params=
+comment5.target=void\ act()
+numComments=6

@@ -5,7 +5,10 @@ import java.util.List;
  * World where the player walks around a big map and the camera follows.
  */
 public class SingleplayerPlaying extends World 
-implements CaptainMinigameController.ResultListener, EngineerMinigameController.ResultListener
+implements CaptainMinigameController.ResultListener,
+           EngineerMinigameController.ResultListener,
+           FishermanMinigameController.ResultListener,
+           BiologistMinigameController.ResultListener
 {
     // Size of the visible window (camera view)
     public static final int VIEW_WIDTH  = 800;
@@ -22,7 +25,7 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
 
     @Override
     public void started()
-    {
+    {  
         MusicManager.enableMenuMusic();
         MusicManager.onScenarioStarted();
     }
@@ -35,15 +38,21 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
     
     @Override
     public void onCaptainMinigameSuccess() {}
-    
     @Override
     public void onCaptainMinigameFailure() {}
     
     @Override
     public void onEngineerMinigameSuccess() {}
-    
     @Override
     public void onEngineerMinigameFailure() {}
+    
+    @Override 
+    public void onFishermanMinigameSuccess() {}
+    @Override
+    public void onFishermanMinigameFailure() {}
+    
+    @Override
+    public void onBiologistDone() {}
 
     public SingleplayerPlaying()
     {
@@ -54,16 +63,20 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
             Button.class, Text.class, 
             CaptainBoat.class, CaptainGoalZone.class, CaptainRock.class, CaptainGameBackground.class,
             EngineerWirePeg.class, EngineerWireLayer.class, EngineerGameBackground.class,
-            PanelBoard.class,
+            FishermanSkillCheckWheel.class,
+            BiologistDraggableFish.class, BiologistDropZone.class,
+            PanelBoard.class, Door.class,
             ControllablePlayer.class, StairTrigger.class
         );
+        
+        MinigameLock.setLocked(false);
         
         // Optional: turn on collision debug visuals
         Solid.DEBUG = false;      // set to false when you're happy
         SlopeArea.DEBUG = false;  // see the slope area
 
         // Load original background
-        mapImage = new GreenfootImage("boat1.jpg");
+        mapImage = new GreenfootImage("boat3.jpg");
 
         // Stretch it to whatever size you want
         mapImage.scale(1789, 1200);
@@ -86,9 +99,6 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
         
         Solid leftUpWall = new Solid(20, mapHeight, 800, mapHeight / 30);
         addObject(leftUpWall, 0, 0);
-        
-        Solid leftMidWall = new Solid(20, mapHeight, 700, mapHeight / 5);
-        addObject(leftMidWall, 0, 0);
 
         // Right border
         int rightWidth = mapWidth - playMaxX;
@@ -118,6 +128,9 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
         SlopeArea lowSlope2 = new SlopeArea(1750, 900, 1350, 950);
         addObject(lowSlope2, 0, 0);
 
+        Door door = new Door();
+        addObject(door, 0, 0);
+        
         // Start camera around the area
         centerOn(mapWidth / 2, 765);
 
@@ -157,7 +170,7 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
         
         StairTrigger downMedTrigger = new StairTrigger(
             StairTrigger.TYPE_DOWN,
-            950, 765,
+            1000, 765,
             1120, 950,
             100, 60,
             45
@@ -175,6 +188,19 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
             1440, 950
         );
         addObject(engineerTrigger, 0, 0);
+        
+        // --- Fisherman minigame trigger on the boat's tip  ---
+        FishermanMinigameTrigger fishTrigger = new FishermanMinigameTrigger(
+            364, 740,
+            5            // required hits
+        );
+        addObject(fishTrigger, 0, 0);
+        
+        // --- Biologist minigame trigger on the research room  ---
+        BiologistMinigameTrigger bioTrigger = new BiologistMinigameTrigger(
+            mapWidth/2 + 25, 766
+        );
+        addObject(bioTrigger, 0, 0);
 
         // --- UI buttons (fixed to the screen) ---
         Button mainMenu = new Button(
@@ -195,9 +221,25 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
         MoneyDisplay.resetMoney();  // start at 0$ for this game
         MoneyDisplay moneyDisplay = new MoneyDisplay();
         addObject(moneyDisplay, VIEW_WIDTH / 2, 20); // x=400, between 100 and 700
+        
+        // --- Debug ---
+        //MoneyDisplay.debugSetMoney(974);
+        //injectDebugFish(); 
 
         // After everything is added, ensure solids & slope are placed correctly
         updateAllSolidPositions();
+    }
+    
+    private void injectDebugFish()
+    {
+        if (FishermanFishData.hasPendingCaught())
+            return; // don’t spam if real fish already exist
+    
+        // Pick any fish you want to test
+        FishSpecies debugFish = FishermanFishData.getAllSpecies().get(0);
+    
+        // Log it as if it was caught
+        FishermanFishData.logAttempt(debugFish, true);
     }
     
     /** Center the camera around a position in MAP coordinates. */
@@ -271,6 +313,13 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
             sa.updateScreenPosition(this);
         }
     
+        // Door
+        List<Door> door = getObjects(Door.class);
+        for (Door d : door)
+        {
+            d.updateScreenPosition(this);
+        }
+        
         // Stair triggers
         List<StairTrigger> triggers = getObjects(StairTrigger.class);
         for (StairTrigger st : triggers)
@@ -292,12 +341,30 @@ implements CaptainMinigameController.ResultListener, EngineerMinigameController.
         {
             et.updateScreenPosition(this);
         }
+        
+        // Fisherman minigame trigger
+        List<FishermanMinigameTrigger> fishTriggers = getObjects(FishermanMinigameTrigger.class);
+        for (FishermanMinigameTrigger ft : fishTriggers)
+        {
+            ft.updateScreenPosition(this);
+        }
+        
+        // Biologist minigame trigger
+        List<BiologistMinigameTrigger> bioTriggers = getObjects(BiologistMinigameTrigger.class);
+        for (BiologistMinigameTrigger bt : bioTriggers)
+        {
+            bt.updateScreenPosition(this);
+        }
     }
 
     /** Called once per frame. Used here to tick the minigame reopen cooldown. */
     public void act()
     {
+        MoneyDisplay.processEndgameIfPending(this);
+        
         CaptainMinigameController.tickReopenTimer();
         EngineerMinigameController.tickReopenTimer();
+        FishermanMinigameController.tickReopenTimer();
+        BiologistMinigameController.tickReopenTimer();
     }
 }

@@ -1,10 +1,15 @@
 #BlueJ class context
 comment0.target=MinigameLock
 comment1.params=
-comment1.target=boolean\ isLocked()
+comment1.target=boolean\ tryLock()
 comment2.params=value
 comment2.target=void\ setLocked(boolean)
 comment3.params=
-comment3.target=boolean\ tryLock()
-comment3.text=Returns\ true\ if\ it\ successfully\ locked;\ false\ if\ already\ locked.
-numComments=4
+comment3.target=boolean\ isLocked()
+comment4.params=r
+comment4.target=void\ registerForceClose(java.lang.Runnable)
+comment4.text=Register\ a\ cleanup\ action\ for\ the\ currently\ running\ minigame
+comment5.params=
+comment5.target=void\ forceCloseActiveMinigame()
+comment5.text=Immediately\ closes\ the\ active\ minigame\ (if\ any)
+numComments=6

@@ -107,6 +107,10 @@ public class CaptainBoat extends Actor
         setLocation(newX, newY);
     }
 
+    private boolean boardAlive()
+    {
+        return board != null && board.getWorld() != null;
+    }
 
     // ========================= ROCK HIT LOGIC =========================
 
@@ -119,6 +123,8 @@ public class CaptainBoat extends Actor
         rock.setImage(rockImg);
     
         MoneyDisplay.addMoney(-100);
+        
+        if (!boardAlive()) return;
     
         // Lock movement for the same duration as the message
         movementLocked = true;

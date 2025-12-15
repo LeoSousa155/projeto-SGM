@@ -48,6 +48,11 @@ public class EngineerMinigameController
             board.destroy();
             return;
         }
+        
+        MinigameLock.registerForceClose(() -> {
+            finished = true;
+            cleanup();
+        });
 
         setupMinigame();
     }

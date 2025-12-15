@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=BiologistDropZone
+comment1.params=index\ text
+comment1.target=BiologistDropZone(int,\ java.lang.String)
+comment2.params=
+comment2.target=int\ getIndex()
+comment3.params=worldX\ worldY
+comment3.target=boolean\ containsPoint(int,\ int)
+numComments=4

@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=FishSpecies
+comment1.params=species\ rarity\ speciesSize\ depth\ habitat\ diet\ threatStatus\ imageFile
+comment1.target=FishSpecies(java.lang.String,\ FishRarity,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+numComments=2
