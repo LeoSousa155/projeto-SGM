@@ -80,7 +80,7 @@ public class OptionsMenuGame extends World
         Button back = new Button(
             "Back",
             "button2.png",
-            () -> Greenfoot.setWorld(new SingleplayerPlaying())
+            () -> WorldNavigator.backOr(new MainMenu())
         );
         addObject(back, 180, 520);
         

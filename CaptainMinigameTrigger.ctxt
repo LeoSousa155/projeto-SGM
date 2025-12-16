@@ -14,5 +14,4 @@ comment5.params=
 comment5.target=void\ checkInteraction()
 comment6.params=world
 comment6.target=void\ openMinigame(greenfoot.World)
-comment6.text=\r\n\ Starts\ the\ Captain\ minigame\ by\ placing\ a\ PanelBoard\ and\r\n\ creating\ a\ CaptainMinigameController.\r\n
 numComments=7

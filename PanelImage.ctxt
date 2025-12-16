@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=PanelImage
+comment1.params=fileName\ w\ h
+comment1.target=PanelImage(java.lang.String,\ int,\ int)
+numComments=2

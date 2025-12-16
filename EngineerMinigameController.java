@@ -257,7 +257,10 @@ public class EngineerMinigameController
     {
         if (finished) return;
         finished = true;
-
+    
+        if (world instanceof SingleplayerPlaying)
+            TutorialController.onEngineerMinigameClosed();
+    
         cleanup();
         MinigameLock.setLocked(false);
         reopenCooldown = 60;

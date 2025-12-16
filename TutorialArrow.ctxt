@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=TutorialArrow
+comment1.params=imageFile\ targetWorldX\ targetWorldY
+comment1.target=TutorialArrow(java.lang.String,\ int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=worldX\ worldY
+comment3.target=void\ setTarget(int,\ int)
+comment4.params=screenX\ screenY
+comment4.target=void\ setHudPosition(int,\ int)
+numComments=5

@@ -39,6 +39,16 @@ public class BiologistMinigameTrigger extends Actor
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
 
+        if (TutorialController.isTutorialMode() && !TutorialController.allowBiologistTrigger())
+        {
+            if (isVisibleNow)
+            {
+                setImage(hiddenImg);
+                isVisibleNow = false;
+            }
+            return;
+        }
+
         List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
         if (players == null || players.isEmpty()) return;
 
@@ -61,6 +71,8 @@ public class BiologistMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
+        
+        if (!TutorialController.allowBiologistTrigger()) return;
     
         if (MinigameLock.isLocked()) return;
         if (!BiologistMinigameController.canReopen()) return;
@@ -95,6 +107,15 @@ public class BiologistMinigameTrigger extends Actor
 
     private void openMinigame(World world)
     {
+        // Tutorial intercept (only once)
+        if (TutorialController.shouldShowBiologistIntro())
+        {
+            TutorialController.showBiologistIntro(world, () -> {
+                openMinigame(world); // will skip intercept after biologistIntroShown=true
+            });
+            return;
+        }
+    
         PanelBoard board = new PanelBoard("panelboard.png", 700, 500);
         world.addObject(board, world.getWidth() / 2, world.getHeight() / 2);
     

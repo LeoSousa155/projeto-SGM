@@ -43,6 +43,16 @@ public class FishermanMinigameTrigger extends Actor
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
 
+        if (TutorialController.isTutorialMode() && !TutorialController.allowFishermanTrigger())
+        {
+            if (isVisibleNow)
+            {
+                setImage(hiddenImg);
+                isVisibleNow = false;
+            }
+            return;
+        }
+        
         List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
         if (players == null || players.isEmpty()) return;
 
@@ -65,6 +75,8 @@ public class FishermanMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
+        
+        if (!TutorialController.allowFishermanTrigger()) return;
 
         if (MinigameLock.isLocked()) return;
         if (!FishermanMinigameController.canReopen()) return;
@@ -99,18 +111,27 @@ public class FishermanMinigameTrigger extends Actor
 
     private void openMinigame(World world)
     {
+        // Tutorial intercept (only once)
+        if (TutorialController.shouldShowFishermanIntro())
+        {
+            TutorialController.showFishermanIntro(world, () -> {
+                openMinigame(world); // will skip intercept after fishermanIntroShown=true
+            });
+            return;
+        }
+    
         if (!(world instanceof FishermanMinigameController.ResultListener))
         {
             System.out.println("ERROR: World must implement ResultListener for FishermanMinigameTrigger.");
             return;
         }
-
+    
         FishermanMinigameController.ResultListener listener =
             (FishermanMinigameController.ResultListener) world;
-
+    
         PanelBoard board = new PanelBoard("panelboard.png", 700, 500);
         world.addObject(board, world.getWidth() / 2, world.getHeight() / 2);
-
+    
         new FishermanMinigameController(world, board, listener, requiredHits);
     }
 }

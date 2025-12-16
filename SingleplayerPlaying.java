@@ -13,11 +13,18 @@ implements CaptainMinigameController.ResultListener,
     // Size of the visible window (camera view)
     public static final int VIEW_WIDTH  = 800;
     public static final int VIEW_HEIGHT = 600;
+    
+    private static GreenfootImage CACHED_MAP = null;
 
     // The big map image
     private GreenfootImage mapImage;
     private int mapWidth;
     private int mapHeight;
+    
+    private boolean tutorialPromptShown = false;
+
+    public boolean isTutorialPromptShown() { return tutorialPromptShown; }
+    public void setTutorialPromptShown(boolean v) { tutorialPromptShown = v; }
 
     // Camera top-left position in map coordinates
     private int camX = 0;
@@ -37,19 +44,19 @@ implements CaptainMinigameController.ResultListener,
     }
     
     @Override
-    public void onCaptainMinigameSuccess() {}
+    public void onCaptainMinigameSuccess() {TutorialController.onCaptainMinigameClosed();}
     @Override
-    public void onCaptainMinigameFailure() {}
+    public void onCaptainMinigameFailure() {TutorialController.onCaptainMinigameClosed();}
     
     @Override
-    public void onEngineerMinigameSuccess() {}
+    public void onEngineerMinigameSuccess() {TutorialController.onEngineerMinigameClosed();}
     @Override
-    public void onEngineerMinigameFailure() {}
+    public void onEngineerMinigameFailure() {TutorialController.onEngineerMinigameClosed();}
     
     @Override 
-    public void onFishermanMinigameSuccess() {}
+    public void onFishermanMinigameSuccess() {TutorialController.onFishermanMinigameClosed();}
     @Override
-    public void onFishermanMinigameFailure() {}
+    public void onFishermanMinigameFailure() {TutorialController.onFishermanMinigameClosed();}
     
     @Override
     public void onBiologistDone() {}
@@ -61,25 +68,27 @@ implements CaptainMinigameController.ResultListener,
 
         setPaintOrder(
             Button.class, Text.class, 
-            CaptainBoat.class, CaptainGoalZone.class, CaptainRock.class, CaptainGameBackground.class,
+            CaptainBoat.class, CaptainGoalZone.class, CaptainRock.class,
             EngineerWirePeg.class, EngineerWireLayer.class, EngineerGameBackground.class,
-            FishermanSkillCheckWheel.class,
+            FishermanSkillCheckWheel.class, CaptainGameBackground.class,
             BiologistDraggableFish.class, BiologistDropZone.class,
-            PanelBoard.class, Door.class,
+            PanelImage.class,
+            PanelBoard.class, TutorialArrow.class, Door.class,
             ControllablePlayer.class, StairTrigger.class
         );
         
         MinigameLock.setLocked(false);
         
-        // Optional: turn on collision debug visuals
+        // === DEBUG ===
         Solid.DEBUG = false;      // set to false when you're happy
         SlopeArea.DEBUG = false;  // see the slope area
 
-        // Load original background
-        mapImage = new GreenfootImage("boat3.jpg");
-
-        // Stretch it to whatever size you want
-        mapImage.scale(1789, 1200);
+        if (CACHED_MAP == null) {
+            GreenfootImage img = new GreenfootImage("boat3.jpg");
+            img.scale(1789, 1200);
+            CACHED_MAP = img;
+        }
+        mapImage = CACHED_MAP;
 
         // Save final size
         mapWidth  = mapImage.getWidth();
@@ -213,7 +222,7 @@ implements CaptainMinigameController.ResultListener,
         Button option = new Button(
             "Options",
             "button1.png",
-            () -> Greenfoot.setWorld(new OptionsMenuGame())
+            () -> WorldNavigator.goTo(this, new OptionsMenuGame())
         );
         addObject(option, 100, 20);
 
@@ -224,10 +233,13 @@ implements CaptainMinigameController.ResultListener,
         
         // --- Debug ---
         //MoneyDisplay.debugSetMoney(974);
-        //injectDebugFish(); 
+        //injectDebugFish();
+        //TutorialController.enableDebugTutorial(TutorialController.DebugStep.BIOLOGIST);
 
         // After everything is added, ensure solids & slope are placed correctly
         updateAllSolidPositions();
+
+        TutorialController.maybeShowTutorial(this);
     }
     
     private void injectDebugFish()

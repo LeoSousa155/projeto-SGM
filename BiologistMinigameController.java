@@ -174,7 +174,7 @@ public class BiologistMinigameController
         optionSpecies = all.toArray(new FishSpecies[0]);
 
         fishActor = new BiologistDraggableFish(correctSpecies.imageFile, this);
-        board.addContent(fishActor, -board.getHalfWidth()/2 + 20, -40);
+        board.addContent(fishActor, -board.getHalfWidth()/2 + 20, -80);
 
         Text leftStats = new Text(buildFullStatsText(current), 24, Color.WHITE, true);
         board.addContent(leftStats, -board.getHalfWidth()/2 + 20, 100);
@@ -481,6 +481,8 @@ public class BiologistMinigameController
         cleanup();
         MinigameLock.setLocked(false);
         reopenCooldown = 30;
+        
+        TutorialController.onBiologistMinigameClosed(world);
     }
 
     private void cleanup()

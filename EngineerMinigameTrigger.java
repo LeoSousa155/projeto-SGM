@@ -40,6 +40,16 @@ public class EngineerMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
+        
+        if (TutorialController.isTutorialMode() && !TutorialController.allowEngineerTrigger())
+        {
+            if (isVisibleNow)
+            {
+                setImage(hiddenImg);
+                isVisibleNow = false;
+            }
+            return;
+        }
 
         List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
         if (players == null || players.isEmpty()) return;
@@ -63,6 +73,8 @@ public class EngineerMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
+        
+        if (!TutorialController.allowEngineerTrigger()) return;
 
         if (MinigameLock.isLocked())
             return;
@@ -100,18 +112,28 @@ public class EngineerMinigameTrigger extends Actor
 
     private void openMinigame(World world)
     {
+        // Tutorial intercept (only once)
+        if (TutorialController.shouldShowEngineerIntro())
+        {
+            TutorialController.showEngineerIntro(world, () -> {
+                openMinigame(world); // will skip intercept after engineerIntroShown=true
+            });
+            return;
+        }
+    
+        // --- normal behaviour ---
         if (!(world instanceof EngineerMinigameController.ResultListener))
         {
             System.out.println("ERROR: World must implement ResultListener for EngineerMinigameTrigger.");
             return;
         }
-
+    
         EngineerMinigameController.ResultListener listener =
             (EngineerMinigameController.ResultListener) world;
-
+    
         PanelBoard board = new PanelBoard("panelboard.png", 700, 500);
         world.addObject(board, world.getWidth() / 2, world.getHeight() / 2);
-
+    
         new EngineerMinigameController(world, board, listener);
     }
 }

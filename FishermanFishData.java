@@ -11,36 +11,35 @@ public class FishermanFishData
     // ===== FISH LIST (your provided set) =====
     private static final FishSpecies[] COMMON = new FishSpecies[] {
         new FishSpecies("Atlantic damselfish", FishRarity.COMMON, "Small",
-            "Shallow", "Reef", "Fish", "Not threatened", "goalfish.png"),
+            "Shallow", "Reef", "Fish", "Not threatened", "damselfish.png"),
 
         new FishSpecies("Rainbow wrasse", FishRarity.COMMON, "Small",
-            "Shallow–Mid", "Pelagic shoals", "invertebrates", "Not threatened", "goalfish.png"),
+            "Shallow–Mid", "Pelagic shoals", "invertebrates", "Not threatened", "rainbow-wrasse.png"),
 
         new FishSpecies("Blue jack mackerel", FishRarity.COMMON, "Medium",
-            "Surface–Mid", "Pelagic shoals", "crustaceans", "Not threatened", "goalfish.png")
+            "Surface–Mid", "Pelagic shoals", "crustaceans", "Not threatened", "jack-mackerel.png")
     };
 
     private static final FishSpecies[] UNCOMMON = new FishSpecies[] {
         new FishSpecies("Dusky grouper", FishRarity.UNCOMMON, "Medium–large",
-            "Shallow–Mid", "Reef", "invertebrates", "Endangered", "goalfish.png"),
+            "Shallow–Mid", "Reef", "invertebrates", "Endangered", "dusky-grouper.png"),
 
         new FishSpecies("Common dentex", FishRarity.UNCOMMON, "Medium–large",
-            "Surface–Mid", "Oceanic pelagic", "crustaceans", "Not threatened", "goalfish.png"),
+            "Surface–Mid", "Oceanic pelagic", "crustaceans", "Not threatened", "common-dentex.png"),
 
         new FishSpecies("Amberjack", FishRarity.UNCOMMON, "Large",
-            "Mid–deep", "Reef", "Fish", "Endangered", "goalfish.png")
+            "Mid–deep", "Reef", "Fish", "Endangered", "amberjack.png")
     };
 
     private static final FishSpecies[] RARE = new FishSpecies[] {
         new FishSpecies("Bigeye tuna", FishRarity.RARE, "Large",
-            "Mid–deep", "Oceanic pelagic", "invertebrates", "Not threatened", "goalfish.png"),
+            "Mid–deep", "Oceanic pelagic", "invertebrates", "Not threatened", "bigeye-tuna.png"),
 
         new FishSpecies("Madeiran ray", FishRarity.RARE, "Medium",
-            "Mid–deep", "Shallow–Mid", "Fish", "Endangered", "goalfish.png"),
+            "Mid–deep", "Shallow–Mid", "Fish", "Endangered", "madeiran-ray.png"),
 
-        // NOTE: your table line has a missing column; I’m assuming diet="Fish"
         new FishSpecies("Smalltooth sand tiger", FishRarity.RARE, "Medium–large",
-            "Mid–deep", "Reef", "Fish", "Endangered", "goalfish.png")
+            "Mid–deep", "Reef", "Fish", "Endangered", "smalltooth-sand-tiger.png")
     };
 
     public static List<FishSpecies> getAllSpecies()

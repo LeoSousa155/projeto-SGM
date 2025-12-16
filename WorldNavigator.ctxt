@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=WorldNavigator
+comment1.params=from\ next
+comment1.target=void\ goTo(greenfoot.World,\ greenfoot.World)
+comment2.params=fallback
+comment2.target=void\ backOr(greenfoot.World)
+numComments=3

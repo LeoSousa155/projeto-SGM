@@ -60,6 +60,16 @@ public class CaptainMinigameTrigger extends Actor
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
 
+        if (TutorialController.isTutorialMode() && !TutorialController.allowCaptainTrigger())
+        {
+            if (isVisibleNow)
+            {
+                setImage(hiddenImg);
+                isVisibleNow = false;
+            }
+            return;
+        }
+
         List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
         if (players == null || players.isEmpty()) return;
         ControllablePlayer player = players.get(0);
@@ -81,6 +91,8 @@ public class CaptainMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
+        
+        if (!TutorialController.allowCaptainTrigger()) return;
 
         // If a Captain minigame is currently running, ignore interaction
         if (MinigameLock.isLocked())
@@ -123,26 +135,31 @@ public class CaptainMinigameTrigger extends Actor
         openMinigame(w);
     }
 
-    /**
-     * Starts the Captain minigame by placing a PanelBoard and
-     * creating a CaptainMinigameController.
-     */
     private void openMinigame(World world)
     {
+        // Tutorial intercept (only once)
+        if (TutorialController.shouldShowCaptainIntro())
+        {
+            TutorialController.showCaptainIntro(world, () -> {
+                // After pressing Continue, start the real minigame
+                openMinigame(world); // will skip intercept now because captainIntroShown = true
+            });
+            return;
+        }
+    
+        // --- NORMAL behaviour below ---
         if (!(world instanceof CaptainMinigameController.ResultListener))
         {
             System.out.println("ERROR: World must implement ResultListener for CaptainMinigameTrigger.");
             return;
         }
-
+    
         CaptainMinigameController.ResultListener listener =
             (CaptainMinigameController.ResultListener) world;
-
-        // Create the board in the center of the screen
-        PanelBoard board = new PanelBoard("panelboard.png", 700, 500); // uses your scaling
+    
+        PanelBoard board = new PanelBoard("panelboard.png", 700, 500);
         world.addObject(board, world.getWidth() / 2, world.getHeight() / 2);
-
-        // Create controller for this session
+    
         new CaptainMinigameController(world, board, listener);
     }
 }

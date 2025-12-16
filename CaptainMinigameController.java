@@ -230,6 +230,10 @@ public class CaptainMinigameController
         if (finished) return; // already closed/end sequence
 
         finished = true;
+        
+        // Notify tutorial system even on manual close
+        if (world instanceof SingleplayerPlaying)
+            TutorialController.onCaptainMinigameClosed();
 
         cleanup();
         //setControlsLocked(false);

@@ -86,6 +86,10 @@ public class FishermanMinigameController
     {
         if (board == null) return;
         
+        // --- Background inside the panel (drawn behind everything else) ---
+        CaptainGameBackground bg = new CaptainGameBackground();
+        board.addContent(bg, 0, 0);
+        
         // Roll which fish this minigame is about
         targetFish = FishermanFishData.rollFish();
 
@@ -388,11 +392,13 @@ public class FishermanMinigameController
     {
         if (finished) return;
         finished = true;
-
+    
+        if (world instanceof SingleplayerPlaying)
+            TutorialController.onFishermanMinigameClosed();
+    
         cleanup();
         MinigameLock.setLocked(false);
         reopenCooldown = 60;
-        // manual abort: no callbacks
     }
 
     private void cleanup()
