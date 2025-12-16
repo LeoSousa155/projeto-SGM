@@ -43,5 +43,4 @@ comment8.params=offsetX\ offsetY
 comment8.target=void\ addRock(int,\ int)
 comment9.params=
 comment9.target=void\ onBoatHitRock()
-comment9.text=\r\n\ Old\ hook\ \u2013\ rock\ penalty\ is\ now\ handled\ inside\ CaptainBoat.\r\n\ Kept\ here\ in\ case\ you\ call\ it\ from\ elsewhere.\r\n
 numComments=17

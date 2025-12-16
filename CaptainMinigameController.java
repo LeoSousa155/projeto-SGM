@@ -13,6 +13,9 @@ public class CaptainMinigameController
 {
     // ====== GLOBAL MOVEMENT LOCK (used by ControllablePlayer) ======
     private static boolean controlsLocked = false;
+    
+    private boolean hitAnyRock = false;
+    private boolean decidedNeedsRepair = false;
 
     /** Lock/unlock character movement globally while the minigame is active. */
     public static void setControlsLocked(boolean locked)
@@ -115,10 +118,21 @@ public class CaptainMinigameController
         board.addContent(goalBox, 0, 0);
 
         // --- Place a few rocks ---
+        addRock(200, 205);
+        addRock(150, 190);
+        addRock(100, 150);
+        addRock(50, 110);
+        addRock(50, -100);
+        addRock(70, -50);
+        addRock(30, -150);
+        addRock(0, 90);
+        addRock(0, -190);
+        addRock(-50, -205);
+        addRock(-50, 70);
         addRock(-100, 50);
-        addRock(130, -20);
-        addRock(0, 100);
-        addRock(80, -100);
+        addRock(-150, 30);
+        addRock(100, 0);
+        addRock(150, 40);
         
         // --- ESC key listener (invisible actor on top of the board) ---
         EscListener escListener = new EscListener();
@@ -145,13 +159,9 @@ public class CaptainMinigameController
         rock.attachCollisionBox(board);
     }
 
-    /**
-     * Old hook – rock penalty is now handled inside CaptainBoat.
-     * Kept here in case you call it from elsewhere.
-     */
     public void onBoatHitRock()
     {
-        // Intentionally empty.
+        hitAnyRock = true;
     }
 
     /**
@@ -171,18 +181,30 @@ public class CaptainMinigameController
     {
         if (finished) return;
         finished = true;
-
-        // Add money
+    
         MoneyDisplay.addMoney(+100);
-
+    
         if (!boardAlive()) return;
-        
-        // Show success message
-        successMessage = new Text("You arrived!", 32, Color.GREEN);
+    
+        boolean needsRepairNow;
+    
+        // 100% if you hit at least one rock, otherwise 50%
+        if (hitAnyRock) needsRepairNow = true;
+        else needsRepairNow = (Greenfoot.getRandomNumber(2) == 0); // 50%
+    
+        decidedNeedsRepair = needsRepairNow;
+    
+        String msg = needsRepairNow
+            ? "You arrived! But the engine needs repairs..."
+            : "You arrived!";
+    
+        successMessage = new Text(msg, 32, Color.GREEN, true);
         board.addContent(successMessage, 0, 0);
-
-        // Start ~1.5 second delay before closing (assuming ~60 fps)
-        exitTimer = 90;
+    
+        if (needsRepairNow)
+            EngineRepairState.setNeedsRepair(true);
+    
+        exitTimer = 120;
     }
 
     private boolean boardAlive()

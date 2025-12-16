@@ -8,6 +8,42 @@ public class FishermanFishData
     private static final Random rng = new Random();
     private static int fishesReleased = 0;
 
+    public static final int MAX_PENDING_CAUGHT = 3;
+    public static final int MAX_ZONE_FISH = 6;
+
+    private static int zoneFishedCount = 0;
+
+    public static int getZoneFishedCount()
+    {
+        return zoneFishedCount;
+    }
+
+    public static int getZoneFishesLeft()
+    {
+        return Math.max(0, MAX_ZONE_FISH - zoneFishedCount);
+    }
+
+    public static boolean isZoneDepleted()
+    {
+        return zoneFishedCount >= MAX_ZONE_FISH;
+    }
+
+    // call when Captain minigame changes zones
+    public static void resetZoneCounter()
+    {
+        zoneFishedCount = 0;
+    }
+
+    public static int getPendingCaughtCount()
+    {
+        return pendingCaught.size();
+    }
+
+    public static boolean isCatchLimitReached()
+    {
+        return getPendingCaughtCount() >= MAX_PENDING_CAUGHT;
+    }
+    
     // ===== FISH LIST (your provided set) =====
     private static final FishSpecies[] COMMON = new FishSpecies[] {
         new FishSpecies("Atlantic damselfish", FishRarity.COMMON, "Small",
@@ -75,15 +111,15 @@ public class FishermanFishData
 
     public static void logAttempt(FishSpecies fish, boolean caught)
     {
+        zoneFishedCount++;
+    
         int value = fish.rarity.value;
-
-        // 30% too small, 70% ideal
         String currentSize = (rng.nextDouble() < 0.30) ? "too small" : "ideal";
-
+    
         FishAttempt a = new FishAttempt(fish, caught, value, currentSize);
         attempts.add(a);
-
-        if (caught)
+    
+        if (caught && pendingCaught.size() < MAX_PENDING_CAUGHT)
             pendingCaught.add(a);
     }
 

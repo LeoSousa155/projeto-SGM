@@ -44,12 +44,20 @@ implements CaptainMinigameController.ResultListener,
     }
     
     @Override
-    public void onCaptainMinigameSuccess() {TutorialController.onCaptainMinigameClosed();}
+    public void onCaptainMinigameSuccess() 
+    {
+        FishermanFishData.resetZoneCounter();
+        TutorialController.onCaptainMinigameClosed();
+    }
     @Override
     public void onCaptainMinigameFailure() {TutorialController.onCaptainMinigameClosed();}
     
     @Override
-    public void onEngineerMinigameSuccess() {TutorialController.onEngineerMinigameClosed();}
+    public void onEngineerMinigameSuccess() 
+    {
+        EngineRepairState.setNeedsRepair(false);
+        TutorialController.onEngineerMinigameClosed();
+    }
     @Override
     public void onEngineerMinigameFailure() {TutorialController.onEngineerMinigameClosed();}
     
@@ -226,10 +234,16 @@ implements CaptainMinigameController.ResultListener,
         );
         addObject(option, 100, 20);
 
-        // --- Money display between Options and Main Menu ---
+        // --- Displays between Options and Main Menu ---
         MoneyDisplay.resetMoney();  // start at 0$ for this game
         MoneyDisplay moneyDisplay = new MoneyDisplay();
         addObject(moneyDisplay, VIEW_WIDTH / 2, 20); // x=400, between 100 and 700
+        
+        FishCaughtDisplay fishDisplay = new FishCaughtDisplay();
+        addObject(fishDisplay, VIEW_WIDTH / 2 + 105, 20);
+        
+        FishLeftDisplay leftDisplay = new FishLeftDisplay();
+        addObject(leftDisplay, VIEW_WIDTH / 2 - 100, 20);
         
         // --- Debug ---
         //MoneyDisplay.debugSetMoney(974);

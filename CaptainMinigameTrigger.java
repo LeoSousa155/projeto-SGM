@@ -14,6 +14,8 @@ public class CaptainMinigameTrigger extends Actor
     // World (map) coordinates of the trigger
     private int worldX;
     private int worldY;
+    
+    private int repairPanelCooldown = 0;
 
     // How close the player must be to interact (in pixels, screen space)
     private int activationDistance = 40;
@@ -51,6 +53,7 @@ public class CaptainMinigameTrigger extends Actor
 
     public void act()
     {
+        if (repairPanelCooldown > 0) repairPanelCooldown--;
         updateVisibility();
         checkInteraction();
     }
@@ -130,11 +133,46 @@ public class CaptainMinigameTrigger extends Actor
 
         if (!canUseKey)
             return; // still holding key from previous frame
+        
+        if (EngineRepairState.needsRepair() && repairPanelCooldown == 0)
+        {
+            showRepairEnginePanel(w);
+            return;
+        }
 
         canUseKey = false;
         openMinigame(w);
     }
 
+    private void showRepairEnginePanel(World world)
+    {
+        if (!MinigameLock.tryLock()) return;
+    
+        PanelBoard board = new PanelBoard("panelboard.png", 600, 300);
+        world.addObject(board, world.getWidth()/2, world.getHeight()/2);
+    
+        Text t = new Text(
+            "You can't sail right now!\n" +
+            "The engine needs repairs.\n" +
+            "Go play the Engineer minigame first.",
+            24, Color.WHITE, true
+        );
+        board.addContent(t, 0, -40);
+    
+        Button ok = new Button("OK", 28, "button1.png", 200, 60, () -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+            repairPanelCooldown = 20; // prevent instant retrigger
+        });
+        board.addContent(ok, 0, 90);
+    
+        MinigameLock.registerForceClose(() -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+            repairPanelCooldown = 20;
+        });
+    }
+    
     private void openMinigame(World world)
     {
         // Tutorial intercept (only once)

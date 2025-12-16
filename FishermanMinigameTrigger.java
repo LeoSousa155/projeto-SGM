@@ -10,6 +10,10 @@ public class FishermanMinigameTrigger extends Actor
     private GreenfootImage visibleImg;
     private GreenfootImage hiddenImg;
     private boolean isVisibleNow = false;
+    
+    private int bucketPanelCooldown = 0;
+    private int zonePanelCooldown = 0;
+    private boolean zonePanelJustShown = false;
 
     // Fish difficulty for this trigger (hits needed)
     private int requiredHits = 2;
@@ -34,6 +38,12 @@ public class FishermanMinigameTrigger extends Actor
 
     public void act()
     {
+        if (bucketPanelCooldown > 0) bucketPanelCooldown--;
+        if (zonePanelCooldown > 0) zonePanelCooldown--;
+    
+        // clear latch once cooldown finishes
+        if (zonePanelCooldown == 0) zonePanelJustShown = false;
+    
         updateVisibility();
         checkInteraction();
     }
@@ -75,40 +85,116 @@ public class FishermanMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
-        
         if (!TutorialController.allowFishermanTrigger()) return;
-
+    
         if (MinigameLock.isLocked()) return;
         if (!FishermanMinigameController.canReopen()) return;
-
+        if (bucketPanelCooldown > 0) return;
+    
         List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
         if (players == null || players.isEmpty()) return;
         ControllablePlayer player = players.get(0);
-
+    
         int dx = player.getX() - getX();
         int dy = player.getY() - getY();
         double dist = Math.sqrt(dx*dx + dy*dy);
-
+    
         if (dist > activationDistance)
         {
             canUseKey = true;
             return;
         }
-
+    
         boolean eDown = Greenfoot.isKeyDown("e");
-
         if (!eDown)
         {
             canUseKey = true;
             return;
         }
-
+    
         if (!canUseKey) return;
-
         canUseKey = false;
+    
+        if (FishermanFishData.isZoneDepleted())
+        {
+            showZoneDepleted(w);
+            return;
+        }
+        
+        if (zonePanelJustShown) return;
+        
+        if (FishermanFishData.isCatchLimitReached())
+        {
+            showStorageFull(w);
+            return;
+        }
+        
         openMinigame(w);
     }
 
+    private void showZoneDepleted(World world)
+    {
+        if (zonePanelCooldown > 0) return;
+        if (!MinigameLock.tryLock()) return;
+    
+        zonePanelJustShown = true;
+    
+        PanelBoard board = new PanelBoard("panelboard.png", 600, 300);
+        world.addObject(board, world.getWidth()/2, world.getHeight()/2);
+    
+        Text t = new Text(
+            "No fish left in this zone! (0/" + FishermanFishData.MAX_ZONE_FISH + ")\n" +
+            "Play the Captain minigame to move to a new zone.",
+            24, Color.WHITE, true
+        );
+        board.addContent(t, 0, -40);
+    
+        Button ok = new Button("OK", 28, "button1.png", 200, 60, () -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+    
+            zonePanelCooldown = 20;
+            bucketPanelCooldown = 20;
+        });
+        board.addContent(ok, 0, 90);
+    
+        MinigameLock.registerForceClose(() -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+    
+            zonePanelCooldown = 20;
+            bucketPanelCooldown = 20;
+        });
+    }
+    
+    private void showStorageFull(World world)
+    {
+        if (!MinigameLock.tryLock()) return;
+    
+        PanelBoard board = new PanelBoard("panelboard.png", 600, 300);
+        world.addObject(board, world.getWidth()/2, world.getHeight()/2);
+    
+        Text t = new Text(
+            "Fish bucket full! (" + FishermanFishData.getPendingCaughtCount() +
+            "/" + FishermanFishData.MAX_PENDING_CAUGHT + ")\nGo to the Biologist to Keep/Release fish!",
+            24, Color.WHITE, true
+        );
+        board.addContent(t, 0, -40);
+    
+        Button ok = new Button("OK", 28, "button1.png", 200, 60, () -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+            bucketPanelCooldown = 20;
+        });
+        board.addContent(ok, 0, 90);
+    
+        MinigameLock.registerForceClose(() -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+            bucketPanelCooldown = 20;
+        });
+    }
+    
     private void openMinigame(World world)
     {
         // Tutorial intercept (only once)

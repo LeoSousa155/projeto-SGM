@@ -145,7 +145,7 @@ public class CaptainBoat extends Actor
         }
     
         // Create new Text actor (white text, size 28)
-        messageActor = new Text(text, 28, Color.WHITE);
+        messageActor = new Text(text, 28, Color.RED, true);
     
         // Show it for ~1.5 seconds (90 frames at 60 FPS)
         messageTimer = 90;
