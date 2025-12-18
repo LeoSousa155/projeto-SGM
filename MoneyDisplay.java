@@ -67,13 +67,13 @@ public class MoneyDisplay extends Actor
     {
         if (endShown || endPending) return;
 
-        if (money >= 1000)
+        if (money >= 2000)
         {
             endShown = true;
             endPending = true;
             pendingWin = true;
         }
-        else if (money <= -1000)
+        else if (money <= -500)
         {
             endShown = true;
             endPending = true;

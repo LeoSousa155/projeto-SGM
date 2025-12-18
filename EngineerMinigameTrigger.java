@@ -12,6 +12,8 @@ public class EngineerMinigameTrigger extends Actor
     private GreenfootImage visibleImg;
     private GreenfootImage hiddenImg;
     private boolean isVisibleNow = false;
+    
+    private int noRepairPanelCooldown = 0;
 
     public EngineerMinigameTrigger(int worldX, int worldY)
     {
@@ -32,6 +34,7 @@ public class EngineerMinigameTrigger extends Actor
 
     public void act()
     {
+        if (noRepairPanelCooldown > 0) noRepairPanelCooldown--;
         updateVisibility();
         checkInteraction();
     }
@@ -73,14 +76,10 @@ public class EngineerMinigameTrigger extends Actor
     {
         World w = getWorld();
         if (!(w instanceof SingleplayerPlaying)) return;
-        
         if (!TutorialController.allowEngineerTrigger()) return;
-
-        if (MinigameLock.isLocked())
-            return;
-
-        if (!EngineerMinigameController.canReopen())
-            return;
+        if (MinigameLock.isLocked()) return;
+        if (!EngineerMinigameController.canReopen()) return;
+        if (noRepairPanelCooldown > 0) return;
 
         List<ControllablePlayer> players = w.getObjects(ControllablePlayer.class);
         if (players == null || players.isEmpty()) return;
@@ -105,11 +104,44 @@ public class EngineerMinigameTrigger extends Actor
         }
 
         if (!canUseKey) return;
+        
+        if (!EngineRepairState.needsRepair())
+        {
+            showNoRepairNeeded(w);
+            return;
+        }
 
         canUseKey = false;
         openMinigame(w);
     }
 
+    private void showNoRepairNeeded(World world)
+    {
+        if (!MinigameLock.tryLock()) return;
+
+        PanelBoard board = new PanelBoard("panelboard.png", 600, 300);
+        world.addObject(board, world.getWidth() / 2, world.getHeight() / 2);
+
+        Text t = new Text(
+            "The engine doesn't need repairs right now.",
+            26, Color.WHITE, true
+        );
+        board.addContent(t, 0, -30);
+
+        Button ok = new Button("OK", 28, "button1.png", 200, 60, () -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+            noRepairPanelCooldown = 20;
+        });
+        board.addContent(ok, 0, 90);
+
+        MinigameLock.registerForceClose(() -> {
+            if (board.getWorld() != null) board.destroy();
+            MinigameLock.setLocked(false);
+            noRepairPanelCooldown = 20;
+        });
+    }
+    
     private void openMinigame(World world)
     {
         // Tutorial intercept (only once)

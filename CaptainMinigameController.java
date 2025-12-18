@@ -70,13 +70,12 @@ public class CaptainMinigameController
         this.board = board;
         this.listener = listener;
 
-        // Allow board to call our update() each frame
+        // Allow board to call update() each frame
         board.attachControllerAdapter(new PanelBoard.ControllerAdapter() {
             public void update() { CaptainMinigameController.this.update(); }
         });
 
         // Lock normal character controls while the minigame is active
-        //setControlsLocked(true);
         if (!MinigameLock.tryLock())
         {
             // Another minigame is already open; just destroy this board and abort.
@@ -173,30 +172,33 @@ public class CaptainMinigameController
         notifyGoalReached();
     }
 
-    /**
-     * Called by CaptainBoat when the goal is reached.
-     * Adds money, shows message, and starts delayed close.
-     */
     public void notifyGoalReached()
     {
         if (finished) return;
         finished = true;
     
-        MoneyDisplay.addMoney(+100);
+        MoneyDisplay.addMoney(50);
     
         if (!boardAlive()) return;
     
         boolean needsRepairNow;
     
-        // 100% if you hit at least one rock, otherwise 50%
-        if (hitAnyRock) needsRepairNow = true;
-        else needsRepairNow = (Greenfoot.getRandomNumber(2) == 0); // 50%
+        if (TutorialController.isTutorialMode())
+        {
+            needsRepairNow = true;
+        }
+        else
+        {
+            // 100% if you hit at least one rock, otherwise 50%
+            if (hitAnyRock) needsRepairNow = true;
+            else needsRepairNow = (Greenfoot.getRandomNumber(2) == 0);
+        }
     
         decidedNeedsRepair = needsRepairNow;
     
         String msg = needsRepairNow
-            ? "You arrived! But the engine needs repairs..."
-            : "You arrived!";
+            ? "You arrived! But the engine needs repairs... (+50$)"
+            : "You arrived! (+50$)";
     
         successMessage = new Text(msg, 32, Color.GREEN, true);
         board.addContent(successMessage, 0, 0);
@@ -228,7 +230,6 @@ public class CaptainMinigameController
                     board.removeContent(successMessage);
 
                 cleanup();  // remove panel & contents
-                //setControlsLocked(false);
                 MinigameLock.setLocked(false);
                 
                 // Start cooldown so the trigger can reopen after 1 second
@@ -263,8 +264,6 @@ public class CaptainMinigameController
 
         // Start cooldown so player can reopen after 1 second
         reopenCooldown = 60;
-        // NOTE: we intentionally do NOT call listener.onCaptainMinigameSuccess/Failure()
-        // because this is a manual abort.
     }
 
     /**
@@ -314,7 +313,6 @@ public class CaptainMinigameController
 
             escConsumed = true;
 
-            // ESC should behave exactly like clicking the X
             closeFromPlayer();
         }
     }

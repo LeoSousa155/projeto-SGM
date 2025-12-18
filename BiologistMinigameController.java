@@ -278,7 +278,7 @@ public class BiologistMinigameController
         board.addContent(releaseButton, -200, board.getHalfHeight() - 60);
         board.addContent(keepButton,     200, board.getHalfHeight() - 60);
 
-        instructionText = new Text("Release if endangered OR too small.", 26, Color.RED, true);
+        instructionText = new Text("Release if endangered OR too small.", 26, Color.YELLOW, true);
         board.addContent(instructionText, 0, -board.getHalfHeight() + 70);
     }
 

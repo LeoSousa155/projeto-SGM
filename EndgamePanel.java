@@ -15,8 +15,8 @@ public class EndgamePanel
         world.addObject(panel, cx, cy);
 
         String title = win
-            ? "Congratulations! You reached 1000$!"
-            : "Game Over... You reached -1000$...";
+            ? "Congratulations! You reached 2000$!"
+            : "Game Over... You reached -500$...";
 
         Text titleText = new Text(title, 28, win ? Color.GREEN : Color.RED, true);
         panel.addContent(titleText, 0, -panel.getHalfHeight() + 50);

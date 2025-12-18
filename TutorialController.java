@@ -151,7 +151,7 @@ public class TutorialController
         board.addContent(story, 0, -60);
         
         Text objective1 = new Text(
-            "Reach 1000$ to win.",
+            "Reach 2000$ to win.",
             26,
             Color.GREEN,
             true
@@ -159,7 +159,7 @@ public class TutorialController
         board.addContent(objective1, -120, 35);
         
         Text objective2 = new Text(
-            "If you somehow reach -1000$, you fail!",
+            "If you somehow reach -500$, you fail!",
             26,
             Color.RED,
             true
@@ -317,8 +317,9 @@ public class TutorialController
         board.addContent(title, 0, -200);
 
         Text body = new Text(
-            "Navigate the boat safely to the next fishing spot to get paid.\n" +
-            "Hitting rocks will damage the boat costing you money.",
+            "Navigate the boat safely to the next Fishing Zone to get paid and\n" +
+            "be able to catch more fish. Hitting rocks will damage the boat's engine\n" +
+            "costing you money and prompting you to repair it!",
             24,
             Color.YELLOW,
             true
@@ -429,13 +430,13 @@ public class TutorialController
     
         Text body = new Text( 
             "Reconnect the loose wires by dragging them to the correct pegs.\n" +
-            "Fixing the engine keeps the ship running and earns you money.\n" + 
-            "Wrong matches will damage the ship even more, costing you money!",
+            "Fixing the engine keeps the boat operational and earns you money!\n" + 
+            "(This boat is in rough shape, so expect frequent repairs.)",
             24,
             Color.YELLOW,
             true
         );
-        board.addContent(body, 0, -130);
+        board.addContent(body, 0, -135);
         
         int posX = 200;
         int posY = 50;
@@ -504,17 +505,18 @@ public class TutorialController
     
         // ---- Template content ----
         Text title = new Text("Fisherman Minigame - Fishing Timing", 40, Color.WHITE, true);
-        board.addContent(title, 0, -200);
+        board.addContent(title, 0, -205);
     
         Text body = new Text(
             "Click the Interact Key when the cursor is inside the Green Zone.\n" + 
             "Time your presses carefully to catch the fish or risk losing it and\n" + 
-            "damage your fishing rod, costing you money!\n",
+            "damage your fishing rod, costing you money!\n" +
+            "(Your fishing bucket can only hold 3 fishes at a time)",
             24,
             Color.YELLOW,
             true
         );
-        board.addContent(body, 0, -130);
+        board.addContent(body, 0, -135);
         
         int posX = 230;
         int posY = 50;
@@ -591,11 +593,11 @@ public class TutorialController
         board.addContent(title, 0, -200);
     
         Text body = new Text(
-            "Drag your fish onto the description that matches it to earn half of the\n" + 
-            "fish's value as money!\n" +
-            "Afterwards, decide whether to keep the fish (and money) or\n" +
-            "or release it (and lose money). Illegal fish (endangered or too small)\n" +
-            "must be released. Keeping illegal fish results in heavy penalties!",
+            "Drag your fish onto the description that matches it to earn half of their\n" + 
+            "value as money! Afterwards, decide whether to Keep the fish and money or\n" +
+            "Release it and lose money. Illegal fish (endangered or too small)\n" +
+            "must be released. Keeping illegal fish results in heavy penalties!\n" + 
+            "(Keeping or Releasing the fish, frees space in your fishing bucket)",
             22,
             Color.YELLOW,
             true

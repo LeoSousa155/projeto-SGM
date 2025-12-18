@@ -10,7 +10,6 @@ public class CaptainRock extends Actor
 
     public CaptainRock()
     {
-        // TODO: replace with actual rock sprite
         GreenfootImage img = new GreenfootImage("rockstopdown.png");
         img.scale(50, 50);
         setImage(img);

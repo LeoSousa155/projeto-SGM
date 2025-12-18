@@ -118,18 +118,18 @@ public class CaptainBoat extends Actor
     {
         disabledRocks.add(rock);
     
+        if (controller != null) controller.onBoatHitRock();
+    
         GreenfootImage rockImg = new GreenfootImage(rock.getImage());
         rockImg.setTransparency(80);
         rock.setImage(rockImg);
     
-        MoneyDisplay.addMoney(-100);
-        
+        MoneyDisplay.addMoney(-50);
+    
         if (!boardAlive()) return;
     
-        // Lock movement for the same duration as the message
         movementLocked = true;
-    
-        showMessage("You crashed...");
+        showMessage("You crashed! (-50$)");
     }
 
     // ========================= MESSAGE SYSTEM =========================
@@ -144,7 +144,6 @@ public class CaptainBoat extends Actor
             board.removeContent(messageActor);
         }
     
-        // Create new Text actor (white text, size 28)
         messageActor = new Text(text, 28, Color.RED, true);
     
         // Show it for ~1.5 seconds (90 frames at 60 FPS)
@@ -186,7 +185,6 @@ public class CaptainBoat extends Actor
         // atan2 gives angle in radians. Greenfoot rotation: 0=right, 90=down.
         int angle = (int) Math.round(Math.toDegrees(Math.atan2(dy, dx)));
     
-        // Keep it in 0..359
         if (angle < 0) angle += 360;
     
         setRotation(angle);

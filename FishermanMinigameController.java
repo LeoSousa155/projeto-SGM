@@ -110,11 +110,12 @@ public class FishermanMinigameController
             "Hits: " + currentHits + " / " + requiredHits +
             "   Misses: " + misses + " / " + maxMisses,
             22,
-            Color.WHITE
+            Color.WHITE,
+            true
         );
         board.addContent(infoText, 0, -board.getHalfHeight() + 40);
 
-        countdownText = new Text("READY", 48, Color.WHITE);
+        countdownText = new Text("READY", 48, Color.WHITE, true);
         board.addContent(countdownText, 0, 0);
 
         // ESC listener
@@ -148,7 +149,7 @@ public class FishermanMinigameController
         if (countdownText != null && countdownText.getWorld() != null)
             board.removeContent(countdownText);
 
-        countdownText = new Text(text, 48, Color.WHITE);
+        countdownText = new Text(text, 48, Color.WHITE, true);
         board.addContent(countdownText, 0, 0);
     }
 
@@ -173,7 +174,7 @@ public class FishermanMinigameController
         if (resultText != null && resultText.getWorld() != null)
             board.removeContent(resultText);
 
-        resultText = new Text(msg, 28, c);
+        resultText = new Text(msg, 28, c, true);
         board.addContent(resultText, 0, 0);
     }
 
@@ -189,7 +190,8 @@ public class FishermanMinigameController
             "Hits: " + currentHits + " / " + requiredHits +
             "   Misses: " + misses + " / " + maxMisses,
             22,
-            Color.WHITE
+            Color.WHITE,
+            true
         );
         board.addContent(infoText, 0, -board.getHalfHeight() + 40);
     }

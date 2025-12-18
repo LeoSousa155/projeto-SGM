@@ -209,7 +209,7 @@ implements CaptainMinigameController.ResultListener,
         // --- Fisherman minigame trigger on the boat's tip  ---
         FishermanMinigameTrigger fishTrigger = new FishermanMinigameTrigger(
             364, 740,
-            5            // required hits
+            7            // required hits
         );
         addObject(fishTrigger, 0, 0);
         
@@ -246,7 +246,7 @@ implements CaptainMinigameController.ResultListener,
         addObject(leftDisplay, VIEW_WIDTH / 2 - 100, 20);
         
         // --- Debug ---
-        //MoneyDisplay.debugSetMoney(974);
+        //MoneyDisplay.debugSetMoney(1900);
         //injectDebugFish();
         //TutorialController.enableDebugTutorial(TutorialController.DebugStep.BIOLOGIST);
 

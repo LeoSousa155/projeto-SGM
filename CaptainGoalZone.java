@@ -10,11 +10,9 @@ public class CaptainGoalZone extends Actor
 {
     public CaptainGoalZone()
     {
-        // TODO: replace with actual goal-zone sprite
         GreenfootImage img = new GreenfootImage("goalfish.png");
         img.scale(70, 40);
 
-        // Optional: make the zone slightly see-through
         img.setTransparency(180);
 
         setImage(img);

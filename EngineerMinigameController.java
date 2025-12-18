@@ -65,7 +65,7 @@ public class EngineerMinigameController
         EngineerGameBackground bg = new EngineerGameBackground();
         board.addContent(bg, 0, -5);
 
-        // Wire layer (same size as your background/panel content area)
+        // Wire layer
         wireLayer = new EngineerWireLayer(700, 485);
         board.addContent(wireLayer, 0, -20);
 
@@ -132,7 +132,7 @@ public class EngineerMinigameController
     
         paused = true;
     
-        wrongMessage = new Text("Wrong match! (-50$)", 28, Color.RED);
+        wrongMessage = new Text("Wrong match! (-100$)", 28, Color.RED, true);
         board.addContent(wrongMessage, 0, 0);
     
         pauseTimer = 90; // 1.5 seconds at ~60 FPS
@@ -177,7 +177,7 @@ public class EngineerMinigameController
         }
         else
         {
-            MoneyDisplay.addMoney(-50);
+            MoneyDisplay.addMoney(-100);
             showWrongMessage();
         }
     }
@@ -196,26 +196,13 @@ public class EngineerMinigameController
 
     public boolean isFinished() { return finished; }
 
-    // Win condition: all matched
     public void notifySuccess()
     {
         if (finished) return;
         finished = true;
 
-        successMessage = new Text("All wires matched!", 28, Color.GREEN);
+        successMessage = new Text("All wires matched!", 28, Color.GREEN, true);
         board.addContent(successMessage, 0, 0);
-
-        exitTimer = 90;
-    }
-
-    // (Optional) If you ever want a hard fail condition later
-    public void notifyFailure()
-    {
-        if (finished) return;
-        finished = true;
-
-        Text fail = new Text("Failed!", 32, Color.WHITE);
-        board.addContent(fail, 0, 0);
 
         exitTimer = 90;
     }
